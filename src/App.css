@@ -1,0 +1,68 @@
+html {
+  background-color: rgb(34, 34, 34);
+  color: white;
+}
+
+.healthbar {
+  width: 200px;
+  height: 30px;
+  border: 3px solid rgb(255, 255, 255);
+}
+
+.inner {
+  width: 100px;
+  height: 30px;
+  transition: 200ms;
+}
+
+.charge {
+  width: 150px;
+  height: 15px;
+  border: 3px solid white;
+}
+
+.inner-charge {
+  height: 15px;
+  background-color: aqua;
+  transition: 200ms;
+}
+
+.reset {
+  cursor: pointer;
+  width: 100px;
+  height: 50px;
+  border-radius: 6px;
+  margin-left: 5px;
+  transition: 200ms;
+}
+
+.reset:hover {
+  color: white;
+  background-color: rgb(149, 149, 149);
+}
+
+.attack {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 5%;
+  margin: 10px 10px 10px 5px;
+  cursor: pointer;
+  user-select: none;
+  width: 100px;
+  height: 50px;
+  border-radius: 6px;
+  background-color: aqua;
+  color: rgb(45, 45, 45);
+  transition: 100ms;
+}
+
+.attack:hover {
+  background-color: aquamarine;
+}
+
+.attack:disabled {
+  color: white;
+  background-color: rgb(209, 209, 209, 0.5);
+}
