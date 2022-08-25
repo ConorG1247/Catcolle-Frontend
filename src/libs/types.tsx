@@ -11,6 +11,7 @@ export type stats = {
   defence: number;
   dexterity: number;
   agility: number;
+  chance: number;
 };
 
 export type attacks = {
@@ -35,6 +36,7 @@ export type eStats = {
   defence: number;
   dexterity: number;
   agility: number;
+  chance: number;
 };
 
 export type enemyStats = {

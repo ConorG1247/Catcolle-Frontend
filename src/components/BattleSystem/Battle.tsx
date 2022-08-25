@@ -1,68 +1,76 @@
 import { useState } from "react";
-import EnemyHealth from "./Enemy";
-import PlayerHealth from "./Player/Player";
+import Enemy from "./Enemy/Enemy";
+import Player from "./Player/Player";
 import { playerStats, enemyStats } from "../../libs/types";
+import { enemyStatsData, playerStatsData } from "libs/data";
 
 function Battle() {
-  const [playerStats, setPlayerStats] = useState<playerStats>({
-    level: 5,
-    health: {
-      initial: 125,
-      health: 125,
-      percentage: 100,
-    },
-    stats: {
-      endurance: 25,
-      strength: 10,
-      intelligence: 10,
-      defence: 10,
-      dexterity: 10,
-      agility: 10,
-    },
-    attacks: [
-      {
-        name: "Slash",
-        cost: 70,
-        multiplier: 1.6,
-        type: "attack",
-        effect: "light attack",
-        description: "A quick slashing move which does medium damage.",
-      },
-    ],
-  });
+  const [playerStats, setPlayerStats] = useState<playerStats>(playerStatsData);
 
-  const [enemyStats, setEnemyStats] = useState<enemyStats>({
-    level: 7,
-    health: {
-      initial: 135,
-      health: 135,
-      percentage: 100,
-    },
-    stats: {
-      strength: 1,
-      intelligence: 1,
-      defence: 1,
-      dexterity: 1,
-      agility: 1,
-    },
-    attacks: [
-      {
-        name: "Slash",
-        cost: 70,
-        multiplier: 1.6,
-        type: "attack",
-        effect: "light attack",
-        description: "A quick slashing move which does medium damage.",
-      },
-    ],
-  });
-  const [startBattle, setStartBattle] = useState(false);
+  const [enemyStats, setEnemyStats] = useState<enemyStats>(enemyStatsData);
+  const [resetStats, setResetStats] = useState(false);
+  const [battleCheck, setBattleCheck] = useState(false);
+  const [playerCharge, setPlayerCharge] = useState(0);
+
+  const changeBattleCheck = () => {
+    setBattleCheck(false);
+  };
+
+  const addCharge = () => {
+    if (
+      playerCharge +
+        playerStats.level * 0.2 +
+        playerStats.stats.intelligence * 0.3 +
+        10 >=
+      playerStats.stats.intelligence * 1.5 + 100
+    ) {
+      setPlayerCharge(playerStats.stats.intelligence * 1.5 + 100);
+      return;
+    }
+    setPlayerCharge(
+      playerCharge +
+        playerStats.level * 0.2 +
+        playerStats.stats.intelligence * 0.3 +
+        7 +
+        Math.floor(Math.random() * 6)
+    );
+  };
+
+  const removeCharge = (cost: number) => {
+    setPlayerCharge(playerCharge - cost);
+  };
+
+  const reset = () => {
+    setResetStats(!resetStats);
+    setBattleCheck(false);
+    setPlayerCharge(0);
+  };
 
   return (
     <div>
-      <PlayerHealth playerStats={playerStats} startBattle={startBattle} />
-      <EnemyHealth enemyStats={enemyStats} />
-      <button onClick={() => setStartBattle(true)}>Start</button>
+      <Player
+        pStats={playerStats}
+        eStats={enemyStats}
+        reset={resetStats}
+        changeBattleCheck={changeBattleCheck}
+        battleCheck={battleCheck}
+        playerCharge={playerCharge}
+      />
+      <Enemy
+        pStats={playerStats}
+        eStats={enemyStats}
+        reset={resetStats}
+        changeBattleCheck={changeBattleCheck}
+        addCharge={addCharge}
+        playerCharge={playerCharge}
+        removeCharge={removeCharge}
+      />
+      <button className="reset" onClick={() => setBattleCheck(true)}>
+        Stop
+      </button>
+      <button className="reset" onClick={reset}>
+        Reset
+      </button>
     </div>
   );
 }

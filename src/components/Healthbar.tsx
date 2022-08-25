@@ -205,14 +205,6 @@ function Healthbar() {
     }
   };
 
-  // starts enemy attacks and sets interval for time based on enemies speed
-  // clears interval if reset is called or player/enemy hp = 0
-  // useEffect(() => {
-  //   if (enemyAttackChecker) {
-  //     enemyAttacks();
-  //   }
-  // }, [enemyAttacks, enemyAttackChecker]);
-
   // creates cooldown for player attack based on speed
   const playerAttackDelay = () => {
     const speedCheck = 1000 / playerStats.speed;
