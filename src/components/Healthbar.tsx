@@ -12,10 +12,28 @@ type stats = {
   strength: number;
   defence: number;
   speed: number;
-  regen: number;
+  intelligence: number;
   crit: number;
   charge: number;
   attacks: attack[];
+};
+
+type enemyAttack = {
+  name: string;
+  multiplier: number;
+  cost: number;
+  description: string;
+  chance: number;
+};
+
+type enemyStats = {
+  strength: number;
+  defence: number;
+  speed: number;
+  intelligence: number;
+  crit: number;
+  charge: number;
+  attacks: enemyAttack[];
 };
 
 function Healthbar() {
@@ -33,7 +51,7 @@ function Healthbar() {
     strength: 15,
     defence: 9,
     speed: 1,
-    regen: 10,
+    intelligence: 25,
     crit: 1.6,
     charge: 0,
     attacks: [
@@ -51,66 +69,149 @@ function Healthbar() {
       },
     ],
   });
-  const [enemyStats, setEnemyStats] = useState<stats>({
+  const [enemyStats, setEnemyStats] = useState<enemyStats>({
     strength: 15,
     defence: 10,
     speed: 1,
-    regen: 10,
+    intelligence: 53,
     crit: 0.6,
     charge: 0,
-    attacks: [],
+    attacks: [
+      {
+        name: "Mega Slash",
+        multiplier: 2,
+        cost: 70,
+        description: "heavy attack",
+        chance: 3,
+      },
+      {
+        name: "Slash",
+        multiplier: 1.3,
+        cost: 70,
+        description: "attack",
+        chance: 7,
+      },
+    ],
   });
   const [enemyAttackChecker, setEnemyAttackChecker] = useState(false);
-  const [intervalId, setIntervalId] = useState<number | NodeJS.Timer>(0);
   const [playerAttackDelayCheck, setPlayerAttackDelayCheck] = useState(false);
 
-  const stopEnemyAttacks = () => {
-    clearInterval(intervalId);
-    setIntervalId(0);
+  const startGame = () => {
+    enemyAttacks();
+  };
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const enemyAttacks = () => {
+    setEnemyAttackChecker(false);
+    let attackValue = enemyStats.strength - playerStats.defence * 0.2;
+    const critChance = Math.floor(Math.random() * 100);
+
+    if (enemyStats.crit > critChance) {
+      attackValue = attackValue * 1.6;
+    }
+
+    const maxAttack = attackValue + attackValue * 0.15;
+    const minAttack = attackValue - attackValue * 0.15;
+
+    const randomAttack = Math.floor(
+      Math.random() * (maxAttack - minAttack + 1) + minAttack
+    );
+
+    if (playerHealth.health - randomAttack <= 0) {
+      setPlayerHealth({ ...playerHealth, health: 0, percentage: 0 });
+      setEnemyAttackChecker(false);
+      return;
+    }
+    setPlayerHealth({
+      ...playerHealth,
+      health: playerHealth.health - randomAttack,
+      percentage:
+        ((playerHealth.health - randomAttack) / playerHealth.initial) * 100,
+    });
+
+    enemyCharge();
+    enemyChargeAttack();
+
+    setTimeout(enemyAttacks, 1000);
+  };
+
+  const enemyCharge = () => {
+    if (enemyStats.charge + enemyStats.intelligence * 0.5 >= 100) {
+      setEnemyStats({
+        ...enemyStats,
+        charge: 100,
+      });
+      return;
+    }
+
+    setEnemyStats({
+      ...enemyStats,
+      charge: enemyStats.charge + enemyStats.intelligence * 0.5,
+    });
+  };
+
+  const enemyChargeAttack = () => {
+    const randomAttack = Math.floor(Math.random() * 10);
+
+    if (
+      enemyStats.charge + enemyStats.intelligence * 0.5 >=
+      enemyStats.attacks[0].cost
+    ) {
+      if (enemyStats.attacks[0].chance >= randomAttack) {
+        return enemyAttackType(enemyStats.attacks[0].description);
+      }
+      return enemyAttackType(enemyStats.attacks[1].description);
+    }
+  };
+
+  const enemyAttackMultipliers = (multiplier: number) => {
+    let attackValue =
+      enemyStats.strength * multiplier - playerStats.defence * 0.2;
+
+    if (playerHealth.health - attackValue <= 0) {
+      setPlayerHealth({
+        ...playerHealth,
+        health: 0,
+        percentage: 0,
+      });
+      return;
+    }
+    setPlayerHealth({
+      ...playerHealth,
+      health: Math.floor(playerHealth.health - attackValue),
+      percentage:
+        ((playerHealth.health - attackValue) / playerHealth.initial) * 100,
+    });
+    if (enemyStats.charge - enemyStats.attacks[0].cost <= 0) {
+      setEnemyStats({
+        ...enemyStats,
+        charge: 0,
+      });
+      return;
+    }
+    setEnemyStats({
+      ...enemyStats,
+      charge: enemyStats.charge - enemyStats.attacks[0].cost,
+    });
+  };
+
+  const enemyAttackType = (type: string) => {
+    switch (type) {
+      case "heavy attack":
+        enemyAttackMultipliers(enemyStats.attacks[0].multiplier);
+        break;
+      default:
+        enemyAttackMultipliers(enemyStats.attacks[1].multiplier);
+    }
   };
 
   // starts enemy attacks and sets interval for time based on enemies speed
   // clears interval if reset is called or player/enemy hp = 0
-  useEffect(() => {
-    const enemyAttacks = () => {
-      let attackValue = enemyStats.strength - playerStats.defence * 0.2;
-      const critChance = Math.floor(Math.random() * 100);
-
-      if (enemyStats.crit > critChance) {
-        attackValue = attackValue * 1.6;
-      }
-
-      const maxAttack = attackValue + attackValue * 0.15;
-      const minAttack = attackValue - attackValue * 0.15;
-
-      const randomAttack = Math.floor(
-        Math.random() * (maxAttack - minAttack + 1) + minAttack
-      );
-
-      if (playerHealth.health - randomAttack <= 0) {
-        setPlayerHealth({ ...playerHealth, health: 0, percentage: 0 });
-        setEnemyAttackChecker(false);
-        return;
-      }
-      setPlayerHealth({
-        ...playerHealth,
-        health: playerHealth.health - randomAttack,
-        percentage:
-          ((playerHealth.health - randomAttack) / playerHealth.initial) * 100,
-      });
-    };
-
-    if (enemyAttackChecker) {
-      setTimeout(enemyAttacks, 1000 / enemyStats.speed);
-    }
-  }, [
-    enemyAttackChecker,
-    enemyStats.strength,
-    enemyStats.crit,
-    enemyStats.speed,
-    playerHealth,
-    playerStats.defence,
-  ]);
+  // useEffect(() => {
+  //   if (enemyAttackChecker) {
+  //     enemyAttacks();
+  //   }
+  // }, [enemyAttacks, enemyAttackChecker]);
 
   // creates cooldown for player attack based on speed
   const playerAttackDelay = () => {
@@ -130,7 +231,7 @@ function Healthbar() {
 
     setPlayerStats({
       ...playerStats,
-      charge: playerStats.charge + playerStats.regen,
+      charge: playerStats.charge + playerStats.intelligence * 0.5,
     });
   };
 
@@ -165,7 +266,9 @@ function Healthbar() {
         ((enemyHealth.health - randomAttack) / enemyHealth.initial) * 100,
     });
 
-    setEnemyAttackChecker(true);
+    if (!enemyAttackChecker) {
+      setEnemyAttackChecker(true);
+    }
   };
 
   const chargeAttack = (index: number) => {
@@ -184,9 +287,18 @@ function Healthbar() {
         let attackValue =
           playerStats.strength * playerStats.attacks[index].multiplier -
           enemyStats.defence * 0.2;
+
+        if (enemyHealth.health - attackValue <= 0) {
+          setEnemyHealth({
+            ...enemyHealth,
+            health: 0,
+            percentage: 0,
+          });
+          return;
+        }
         setEnemyHealth({
           ...enemyHealth,
-          health: enemyHealth.health - attackValue,
+          health: Math.floor(enemyHealth.health - attackValue),
           percentage:
             ((enemyHealth.health - attackValue) / enemyHealth.initial) * 100,
         });
@@ -214,7 +326,6 @@ function Healthbar() {
       charge: 0,
     });
     setEnemyAttackChecker(false);
-    stopEnemyAttacks();
   };
 
   return (
@@ -241,6 +352,7 @@ function Healthbar() {
           style={{ width: playerStats.charge * 1.5 }}
         />
       </div>
+      <div>Charge: {playerStats.charge}</div>
       <div>Player: {playerHealth.health}</div>
       <div className="healthbar">
         <div
@@ -264,8 +376,12 @@ function Healthbar() {
           style={{ width: enemyStats.charge * 1.5 }}
         />
       </div>
+      <div>Charge: {enemyStats.charge}</div>
       <div>Enemy: {enemyHealth.health}</div>
       <br />
+      <button onClick={startGame} className="reset">
+        Start
+      </button>
       <button
         disabled={playerAttackDelayCheck}
         className={playerAttackDelayCheck ? "attack attack-disabled" : "attack"}
