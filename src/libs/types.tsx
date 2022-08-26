@@ -5,7 +5,6 @@ export type health = {
 };
 
 export type stats = {
-  endurance: number;
   strength: number;
   intelligence: number;
   defence: number;

@@ -5,10 +5,13 @@ function Slash(
   attack: attacks,
   enemyStats: enemyStats,
   changeEnemyHealth: (changes: enemyStats) => void,
-  changeBattleCheck: () => void
+  changeBattleCheck: () => void,
+  changeDamageNumber: (changes: number) => void
 ) {
   const damage =
     playerStats.level * 5 + playerStats.stats.strength * attack.multiplier;
+
+  changeDamageNumber(damage);
 
   if (enemyStats.health.health - damage <= 0) {
     changeEnemyHealth({

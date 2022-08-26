@@ -1,12 +1,13 @@
 import { attacks, enemyStats, playerStats } from "libs/types";
-import Slash from "./Slash";
+import Slash from "./Light/Slash";
 
 function AttackType(
   playerStats: playerStats,
   attack: attacks,
   enemyStats: enemyStats,
   changeEnemyHealth: (changes: enemyStats) => void,
-  changeBattleCheck: () => void
+  changeBattleCheck: () => void,
+  changeDamageNumber: (changes: number) => void
 ) {
   switch (attack.name) {
     case "Slash":
@@ -15,7 +16,8 @@ function AttackType(
         attack,
         enemyStats,
         changeEnemyHealth,
-        changeBattleCheck
+        changeBattleCheck,
+        changeDamageNumber
       );
       break;
     default:

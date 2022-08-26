@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import EnemyHealth from "./EnemyHealth";
 import PlayerBasic from "hooks/PlayerAttacks/PlayerBasic";
 import AttackType from "hooks/PlayerAttacks/AttackType";
+import ChargeAttacks from "./ChargeAttacks";
 
 type props = {
   pStats: playerStats;
@@ -28,6 +29,7 @@ function Enemy({
   const [playerStats, setPlayerStats] = useState(pStats);
   const [enemyStats, setEnemyStats] = useState(eStats);
   const [attackDelayCheck, setAttackDelayCheck] = useState(false);
+  const [damageNumberDisplay, setDamageNumberDisplay] = useState<number[]>([]);
 
   useEffect(() => {
     setEnemyStats({
@@ -38,6 +40,7 @@ function Enemy({
         percentage: 100,
       },
     });
+    setDamageNumberDisplay([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset]);
 
@@ -51,15 +54,19 @@ function Enemy({
 
   const basicAttack = () => {
     playerAttackDelay();
-    const changeEnemyHealth = (changes: enemyStats) => {
-      setEnemyStats(changes);
-    };
+    const dodgeChance = Math.floor(enemyStats.stats.agility * 0.1 + 5);
+
+    if (dodgeChance >= Math.floor(Math.random() * 100)) {
+      return;
+    }
+
     PlayerBasic(
       playerStats,
       enemyStats,
       addCharge,
       changeEnemyHealth,
-      changeBattleCheck
+      changeBattleCheck,
+      changeDamageNumber
     );
   };
 
@@ -69,10 +76,6 @@ function Enemy({
     }
     removeCharge(attack.cost);
 
-    const changeEnemyHealth = (changes: enemyStats) => {
-      setEnemyStats(changes);
-    };
-
     switch (attack.type) {
       case "attack":
         AttackType(
@@ -80,7 +83,8 @@ function Enemy({
           attack,
           enemyStats,
           changeEnemyHealth,
-          changeBattleCheck
+          changeBattleCheck,
+          changeDamageNumber
         );
         break;
       default:
@@ -88,9 +92,30 @@ function Enemy({
     }
   };
 
+  function changeEnemyHealth(changes: enemyStats) {
+    setEnemyStats(changes);
+  }
+
+  function changeDamageNumber(changes: number) {
+    setDamageNumberDisplay([...damageNumberDisplay, -Math.abs(changes)]);
+  }
+
   return (
     <div>
-      <EnemyHealth health={enemyStats.health} />
+      <div style={{ display: "flex" }}>
+        <EnemyHealth health={enemyStats.health} />
+        {damageNumberDisplay.map((dmg, index) => {
+          return (
+            <div
+              key={index}
+              className={damageNumberDisplay ? "damage-display-fade" : ""}
+              style={{ padding: 5 }}
+            >
+              {dmg}
+            </div>
+          );
+        })}
+      </div>
       <div>Enemy: {enemyStats.health.health}</div>
       <button
         disabled={battleCheck ? (attackDelayCheck ? true : false) : false}
@@ -99,27 +124,12 @@ function Enemy({
       >
         Attack
       </button>
-      <div style={{ display: "flex" }}>
-        {playerStats.attacks.map((attacks, index) => {
-          return (
-            <div key={index}>
-              <button
-                disabled={
-                  battleCheck
-                    ? playerCharge > attacks.cost
-                      ? false
-                      : true
-                    : true
-                }
-                onClick={() => chargedAttack(attacks)}
-                className="attack"
-              >
-                {attacks.name}
-              </button>
-            </div>
-          );
-        })}
-      </div>
+      <ChargeAttacks
+        playerStats={playerStats}
+        battleCheck={battleCheck}
+        playerCharge={playerCharge}
+        chargedAttack={chargedAttack}
+      />
     </div>
   );
 }

@@ -6,7 +6,8 @@ function EnemyAttackType(
   enemyStats: enemyStats,
   attack: attacks,
   changePlayerHealth: (changes: playerStats) => void,
-  changeBattleCheck: () => void
+  changeBattleCheck: () => void,
+  changeDamageNumber: (changes: number) => void
 ) {
   switch (attack.name) {
     case "Stab":
@@ -15,7 +16,8 @@ function EnemyAttackType(
         enemyStats,
         attack,
         changePlayerHealth,
-        changeBattleCheck
+        changeBattleCheck,
+        changeDamageNumber
       );
       break;
     default:

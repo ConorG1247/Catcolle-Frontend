@@ -5,10 +5,13 @@ function Stab(
   enemyStats: enemyStats,
   attack: attacks,
   changePlayerHealth: (changes: playerStats) => void,
-  changeBattleCheck: () => void
+  changeBattleCheck: () => void,
+  changeDamageNumber: (changes: number) => void
 ) {
   const damage =
     enemyStats.level * 2 + enemyStats.stats.strength * attack.multiplier;
+
+  changeDamageNumber(damage);
 
   if (playerStats.health.health - damage <= 0) {
     changePlayerHealth({

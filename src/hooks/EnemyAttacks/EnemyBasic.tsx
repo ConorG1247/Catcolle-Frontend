@@ -4,7 +4,8 @@ function EnemyBasic(
   playerStats: playerStats,
   enemyStats: enemyStats,
   changePlayerHealth: (changes: playerStats) => void,
-  changeBattleCheck: () => void
+  changeBattleCheck: () => void,
+  changeDamageNumber: (changes: number) => void
 ) {
   let attackDamage = Math.floor(
     (enemyStats.level * 3) / 2 +
@@ -28,6 +29,8 @@ function EnemyBasic(
   const damageVariance = Math.floor(
     Math.random() * (maxAttack - minAttack + 1) + minAttack
   );
+
+  changeDamageNumber(damageVariance);
 
   if (playerStats.health.health - damageVariance <= 0) {
     changePlayerHealth({

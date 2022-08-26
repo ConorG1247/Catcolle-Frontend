@@ -6,7 +6,6 @@ export const playerStatsData = {
     percentage: 100,
   },
   stats: {
-    endurance: 25,
     strength: 10,
     intelligence: 10,
     defence: 10,
