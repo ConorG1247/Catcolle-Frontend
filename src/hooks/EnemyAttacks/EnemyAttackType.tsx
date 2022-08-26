@@ -1,20 +1,20 @@
 import { attacks, enemyStats, playerStats } from "libs/types";
-import Slash from "./Slash";
+import Stab from "./Light/Stab";
 
-function AttackType(
+function EnemyAttackType(
   playerStats: playerStats,
-  attack: attacks,
   enemyStats: enemyStats,
-  changeEnemyHealth: (changes: enemyStats) => void,
+  attack: attacks,
+  changePlayerHealth: (changes: playerStats) => void,
   changeBattleCheck: () => void
 ) {
-  switch (attack.effect) {
-    case "light attack":
-      Slash(
+  switch (attack.name) {
+    case "Stab":
+      Stab(
         playerStats,
-        attack,
         enemyStats,
-        changeEnemyHealth,
+        attack,
+        changePlayerHealth,
         changeBattleCheck
       );
       break;
@@ -23,4 +23,4 @@ function AttackType(
   }
 }
 
-export default AttackType;
+export default EnemyAttackType;

@@ -1,12 +1,11 @@
 import { useState } from "react";
 import Enemy from "./Enemy/Enemy";
 import Player from "./Player/Player";
-import { playerStats, enemyStats } from "../../libs/types";
+import { playerStats, enemyStats } from "libs/types";
 import { enemyStatsData, playerStatsData } from "libs/data";
 
 function Battle() {
   const [playerStats, setPlayerStats] = useState<playerStats>(playerStatsData);
-
   const [enemyStats, setEnemyStats] = useState<enemyStats>(enemyStatsData);
   const [resetStats, setResetStats] = useState(false);
   const [battleCheck, setBattleCheck] = useState(false);
@@ -63,6 +62,7 @@ function Battle() {
         pStats={playerStats}
         eStats={enemyStats}
         reset={resetStats}
+        battleCheck={battleCheck}
         changeBattleCheck={changeBattleCheck}
         addCharge={addCharge}
         playerCharge={playerCharge}

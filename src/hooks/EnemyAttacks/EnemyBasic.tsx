@@ -1,19 +1,19 @@
 import { enemyStats, playerStats } from "libs/types";
 
-function PlayerBasic(
+function EnemyBasic(
   playerStats: playerStats,
   enemyStats: enemyStats,
   changePlayerHealth: (changes: playerStats) => void,
   changeBattleCheck: () => void
 ) {
   let attackDamage = Math.floor(
-    (enemyStats.level * 4) / 2 +
+    (enemyStats.level * 3) / 2 +
       ((enemyStats.stats.strength * 0.4 +
         enemyStats.stats.agility * 0.3 +
         enemyStats.stats.intelligence * 0.3 +
         enemyStats.stats.dexterity * 0.7) /
         2 -
-        enemyStats.stats.defence * 0.4)
+        playerStats.stats.defence * 0.4)
   );
 
   const critChance = enemyStats.stats.chance * 0.4;
@@ -57,4 +57,4 @@ function PlayerBasic(
   return;
 }
 
-export default PlayerBasic;
+export default EnemyBasic;

@@ -1,13 +1,14 @@
 import { attacks, enemyStats, playerStats } from "libs/types";
 import { useState, useEffect } from "react";
 import EnemyHealth from "./EnemyHealth";
-import PlayerBasic from "hooks/Attacks/PlayerBasic";
-import AttackType from "hooks/Attacks/AttackType";
+import PlayerBasic from "hooks/PlayerAttacks/PlayerBasic";
+import AttackType from "hooks/PlayerAttacks/AttackType";
 
 type props = {
   pStats: playerStats;
   eStats: enemyStats;
   reset: boolean;
+  battleCheck: boolean;
   changeBattleCheck: () => void;
   addCharge: () => void;
   playerCharge: number;
@@ -18,6 +19,7 @@ function Enemy({
   pStats,
   eStats,
   reset,
+  battleCheck,
   changeBattleCheck,
   addCharge,
   playerCharge,
@@ -91,25 +93,33 @@ function Enemy({
       <EnemyHealth health={enemyStats.health} />
       <div>Enemy: {enemyStats.health.health}</div>
       <button
-        disabled={attackDelayCheck}
-        className={attackDelayCheck ? "attack attack-disabled" : "attack"}
+        disabled={battleCheck ? (attackDelayCheck ? true : false) : false}
+        className="attack"
         onClick={basicAttack}
       >
         Attack
       </button>
-      {playerStats.attacks.map((attacks, index) => {
-        return (
-          <div key={index}>
-            <button
-              disabled={playerCharge > attacks.cost ? false : true}
-              onClick={() => chargedAttack(attacks)}
-              className="attack"
-            >
-              {attacks.name}
-            </button>
-          </div>
-        );
-      })}
+      <div style={{ display: "flex" }}>
+        {playerStats.attacks.map((attacks, index) => {
+          return (
+            <div key={index}>
+              <button
+                disabled={
+                  battleCheck
+                    ? playerCharge > attacks.cost
+                      ? false
+                      : true
+                    : true
+                }
+                onClick={() => chargedAttack(attacks)}
+                className="attack"
+              >
+                {attacks.name}
+              </button>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

@@ -23,14 +23,22 @@ export const playerStatsData = {
       effect: "light attack",
       description: "A quick slashing move which does medium damage.",
     },
+    {
+      name: "Slash",
+      cost: 70,
+      multiplier: 1.6,
+      type: "attack",
+      effect: "light attack",
+      description: "A quick slashing move which does medium damage.",
+    },
   ],
 };
 
 export const enemyStatsData = {
-  level: 7,
+  level: 6,
   health: {
-    initial: 135,
-    health: 135,
+    initial: 125,
+    health: 125,
     percentage: 100,
   },
   stats: {
@@ -43,12 +51,12 @@ export const enemyStatsData = {
   },
   attacks: [
     {
-      name: "Slash",
-      cost: 70,
-      multiplier: 1.6,
+      name: "Stab",
+      cost: 60,
+      multiplier: 1.2,
       type: "attack",
       effect: "light attack",
-      description: "A quick slashing move which does medium damage.",
+      description: "A fast stab, effective but low damage.",
     },
   ],
 };

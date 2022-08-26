@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import PlayerHealth from "./PlayerHealth";
-import { enemyStats, playerStats } from "../../../libs/types";
-import EnemyBasic from "hooks/Attacks/EnemyBasic";
+import { attacks, enemyStats, playerStats, stats } from "libs/types";
+import EnemyBasic from "hooks/EnemyAttacks/EnemyBasic";
+import EnemyAttackType from "hooks/EnemyAttacks/EnemyAttackType";
 
 type props = {
   pStats: playerStats;
@@ -25,26 +26,29 @@ function Player({
   const [enemyCharge, setEnemyCharge] = useState(0);
 
   useEffect(() => {
+    const charge = Math.floor(
+      enemyCharge +
+        enemyStats.level * 0.2 +
+        enemyStats.stats.intelligence * 0.3 +
+        7 +
+        Math.random() * 6
+    );
+
     const basicAttack = () => {
       if (battleCheck) {
-        setEnemyCharge(
-          Math.floor(
-            enemyCharge +
-              enemyStats.level * 0.2 +
-              enemyStats.stats.intelligence * 0.3 +
-              7 +
-              Math.random() * 6
-          )
-        );
-        const changePlayerHealth = (changes: playerStats) => {
-          setPlayerStats(changes);
-        };
-        EnemyBasic(
-          playerStats,
-          enemyStats,
-          changePlayerHealth,
-          changeBattleCheck
-        );
+        if (charge > enemyStats.attacks[0].cost) {
+          enemyChargedAttack(enemyStats.attacks[0]);
+          setEnemyCharge(charge - enemyStats.attacks[0].cost);
+          return;
+        } else {
+          setEnemyCharge(charge);
+          EnemyBasic(
+            playerStats,
+            enemyStats,
+            changePlayerHealth,
+            changeBattleCheck
+          );
+        }
       }
     };
     setTimeout(basicAttack, 1000 - enemyStats.stats.dexterity * 3);
@@ -64,6 +68,20 @@ function Player({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset]);
 
+  function enemyChargedAttack(attack: attacks) {
+    EnemyAttackType(
+      playerStats,
+      enemyStats,
+      attack,
+      changePlayerHealth,
+      changeBattleCheck
+    );
+  }
+
+  function changePlayerHealth(changes: playerStats) {
+    setPlayerStats(changes);
+  }
+
   return (
     <div>
       <PlayerHealth health={playerStats.health} />
@@ -75,6 +93,7 @@ function Player({
       </div>
       <div>Charge: {playerCharge}</div>
       <div>Player: {playerStats.health.health}</div>
+      <div>{enemyCharge}</div>
     </div>
   );
 }
