@@ -21,18 +21,21 @@ function Battle() {
       playerCharge +
         playerStats.level * 0.2 +
         playerStats.stats.intelligence * 0.3 +
-        10 >=
+        7 +
+        Math.floor(Math.random() * 6) >=
       playerStats.stats.intelligence * 1.5 + 100
     ) {
       setPlayerCharge(playerStats.stats.intelligence * 1.5 + 100);
       return;
     }
     setPlayerCharge(
-      playerCharge +
-        playerStats.level * 0.2 +
-        playerStats.stats.intelligence * 0.3 +
-        7 +
-        Math.floor(Math.random() * 6)
+      Math.floor(
+        playerCharge +
+          playerStats.level * 0.2 +
+          playerStats.stats.intelligence * 0.3 +
+          7 +
+          Math.random() * 6
+      )
     );
   };
 
@@ -65,8 +68,8 @@ function Battle() {
         playerCharge={playerCharge}
         removeCharge={removeCharge}
       />
-      <button className="reset" onClick={() => setBattleCheck(true)}>
-        Stop
+      <button className="reset" onClick={() => setBattleCheck(!battleCheck)}>
+        Start
       </button>
       <button className="reset" onClick={reset}>
         Reset

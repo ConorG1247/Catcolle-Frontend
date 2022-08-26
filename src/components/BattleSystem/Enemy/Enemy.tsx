@@ -1,8 +1,8 @@
 import { attacks, enemyStats, playerStats } from "libs/types";
 import { useState, useEffect } from "react";
 import EnemyHealth from "./EnemyHealth";
-import Slash from "hooks/Attacks/Slash";
 import PlayerBasic from "hooks/Attacks/PlayerBasic";
+import AttackType from "hooks/Attacks/AttackType";
 
 type props = {
   pStats: playerStats;
@@ -70,13 +70,20 @@ function Enemy({
     const changeEnemyHealth = (changes: enemyStats) => {
       setEnemyStats(changes);
     };
-    Slash(
-      playerStats,
-      attack,
-      enemyStats,
-      changeEnemyHealth,
-      changeBattleCheck
-    );
+
+    switch (attack.type) {
+      case "attack":
+        AttackType(
+          playerStats,
+          attack,
+          enemyStats,
+          changeEnemyHealth,
+          changeBattleCheck
+        );
+        break;
+      default:
+        return;
+    }
   };
 
   return (
@@ -93,7 +100,11 @@ function Enemy({
       {playerStats.attacks.map((attacks, index) => {
         return (
           <div key={index}>
-            <button onClick={() => chargedAttack(attacks)} className="attack">
+            <button
+              disabled={playerCharge > attacks.cost ? false : true}
+              onClick={() => chargedAttack(attacks)}
+              className="attack"
+            >
               {attacks.name}
             </button>
           </div>

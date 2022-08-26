@@ -4,7 +4,7 @@ function PlayerBasic(
   playerStats: playerStats,
   enemyStats: enemyStats,
   addCharge: () => void,
-  changeEnemyHealth: (changes: any) => void,
+  changeEnemyHealth: (changes: enemyStats) => void,
   changeBattleCheck: () => void
 ) {
   let attackDamage = Math.floor(

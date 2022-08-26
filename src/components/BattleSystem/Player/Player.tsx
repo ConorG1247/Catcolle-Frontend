@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import PlayerHealth from "./PlayerHealth";
 import { enemyStats, playerStats } from "../../../libs/types";
+import EnemyBasic from "hooks/Attacks/EnemyBasic";
 
 type props = {
   pStats: playerStats;
@@ -19,59 +20,31 @@ function Player({
   battleCheck,
   playerCharge,
 }: props) {
-  const [playerStats, setPlayerStats] = useState<props["pStats"]>(pStats);
-  const [enemyStats, setEnemyStats] = useState<props["eStats"]>(eStats);
+  const [playerStats, setPlayerStats] = useState(pStats);
+  const [enemyStats, setEnemyStats] = useState(eStats);
+  const [enemyCharge, setEnemyCharge] = useState(0);
 
   useEffect(() => {
     const basicAttack = () => {
       if (battleCheck) {
-        let attackDamage = Math.floor(
-          (enemyStats.level * 4) / 2 +
-            ((enemyStats.stats.strength * 0.4 +
-              enemyStats.stats.agility * 0.3 +
+        setEnemyCharge(
+          Math.floor(
+            enemyCharge +
+              enemyStats.level * 0.2 +
               enemyStats.stats.intelligence * 0.3 +
-              enemyStats.stats.dexterity * 0.7) /
-              2 -
-              enemyStats.stats.defence * 0.4)
+              7 +
+              Math.random() * 6
+          )
         );
-
-        const critChance = enemyStats.stats.chance * 0.4;
-
-        if (critChance >= Math.floor(Math.random() * 100)) {
-          attackDamage = attackDamage * 1.6 + enemyStats.stats.chance * 0.2;
-        }
-
-        const maxAttack = attackDamage + attackDamage * 0.15;
-        const minAttack = attackDamage - attackDamage * 0.15;
-
-        const damageVariance = Math.floor(
-          Math.random() * (maxAttack - minAttack + 1) + minAttack
+        const changePlayerHealth = (changes: playerStats) => {
+          setPlayerStats(changes);
+        };
+        EnemyBasic(
+          playerStats,
+          enemyStats,
+          changePlayerHealth,
+          changeBattleCheck
         );
-
-        if (playerStats.health.health - damageVariance <= 0) {
-          setPlayerStats({
-            ...playerStats,
-            health: {
-              ...playerStats.health,
-              health: 0,
-              percentage: 0,
-            },
-          });
-          changeBattleCheck();
-          return;
-        }
-
-        setPlayerStats({
-          ...playerStats,
-          health: {
-            ...playerStats.health,
-            health: playerStats.health.health - damageVariance,
-            percentage:
-              ((playerStats.health.health - damageVariance) /
-                playerStats.health.initial) *
-              100,
-          },
-        });
       }
     };
     setTimeout(basicAttack, 1000 - enemyStats.stats.dexterity * 3);
@@ -87,6 +60,7 @@ function Player({
         percentage: 100,
       },
     });
+    setEnemyCharge(0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset]);
 
