@@ -24,7 +24,9 @@ function Player({
   const [playerStats, setPlayerStats] = useState(pStats);
   const [enemyStats, setEnemyStats] = useState(eStats);
   const [enemyCharge, setEnemyCharge] = useState(0);
-  const [damageNumberDisplay, setDamageNumberDisplay] = useState<number>();
+  const [damageNumberDisplay, setDamageNumberDisplay] = useState<
+    (string | number)[]
+  >([]);
 
   useEffect(() => {
     setPlayerStats({
@@ -36,7 +38,7 @@ function Player({
       },
     });
     setEnemyCharge(0);
-    setDamageNumberDisplay(undefined);
+    setDamageNumberDisplay([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset]);
 
@@ -53,6 +55,7 @@ function Player({
       const dodgeChance = Math.floor(playerStats.stats.agility * 0.1 + 5);
 
       if (dodgeChance >= Math.floor(Math.random() * 100)) {
+        setDamageNumberDisplay([...damageNumberDisplay, "Miss"]);
         setTimeout(basicAttack, 1000 - enemyStats.stats.dexterity * 3);
         return;
       }
@@ -94,14 +97,28 @@ function Player({
   }
 
   function changeDamageNumber(changes: number) {
-    setDamageNumberDisplay(-Math.abs(changes));
+    setDamageNumberDisplay([...damageNumberDisplay, -Math.abs(changes)]);
   }
 
   return (
     <div>
       <div style={{ display: "flex" }}>
         <PlayerHealth health={playerStats.health} />
-        <div>{damageNumberDisplay}</div>
+        {damageNumberDisplay.map((dmg, index) => {
+          return (
+            <div
+              key={index}
+              className={
+                damageNumberDisplay
+                  ? "damage-display-fade enemy-damage-display"
+                  : ""
+              }
+              style={{ padding: 5 }}
+            >
+              {dmg}
+            </div>
+          );
+        })}
       </div>
       <div
         className="charge"

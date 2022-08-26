@@ -29,7 +29,9 @@ function Enemy({
   const [playerStats, setPlayerStats] = useState(pStats);
   const [enemyStats, setEnemyStats] = useState(eStats);
   const [attackDelayCheck, setAttackDelayCheck] = useState(false);
-  const [damageNumberDisplay, setDamageNumberDisplay] = useState<number[]>([]);
+  const [damageNumberDisplay, setDamageNumberDisplay] = useState<
+    (string | number)[]
+  >([]);
 
   useEffect(() => {
     setEnemyStats({
@@ -57,6 +59,7 @@ function Enemy({
     const dodgeChance = Math.floor(enemyStats.stats.agility * 0.1 + 5);
 
     if (dodgeChance >= Math.floor(Math.random() * 100)) {
+      setDamageNumberDisplay([...damageNumberDisplay, "Miss"]);
       return;
     }
 
@@ -106,12 +109,14 @@ function Enemy({
         <EnemyHealth health={enemyStats.health} />
         {damageNumberDisplay.map((dmg, index) => {
           return (
-            <div
-              key={index}
-              className={damageNumberDisplay ? "damage-display-fade" : ""}
-              style={{ padding: 5 }}
-            >
-              {dmg}
+            <div key={index}>
+              <div
+                className={damageNumberDisplay ? "damage-display-fade" : ""}
+                style={{ padding: 5 }}
+              >
+                {dmg}
+              </div>
+              <div className={damageNumberDisplay ? "" : ""}></div>
             </div>
           );
         })}
@@ -130,6 +135,7 @@ function Enemy({
         playerCharge={playerCharge}
         chargedAttack={chargedAttack}
       />
+      <div className="slash"></div>
     </div>
   );
 }

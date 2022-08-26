@@ -16,26 +16,17 @@ function Battle() {
   };
 
   const addCharge = () => {
-    if (
+    const charge =
       playerCharge +
-        playerStats.level * 0.2 +
-        playerStats.stats.intelligence * 0.3 +
-        7 +
-        Math.floor(Math.random() * 6) >=
-      playerStats.stats.intelligence * 1.5 + 100
-    ) {
+      playerStats.level * 0.2 +
+      playerStats.stats.intelligence * 0.3 +
+      7 +
+      Math.floor(Math.random() * 6);
+    if (charge >= playerStats.stats.intelligence * 1.5 + 100) {
       setPlayerCharge(playerStats.stats.intelligence * 1.5 + 100);
       return;
     }
-    setPlayerCharge(
-      Math.floor(
-        playerCharge +
-          playerStats.level * 0.2 +
-          playerStats.stats.intelligence * 0.3 +
-          7 +
-          Math.random() * 6
-      )
-    );
+    setPlayerCharge(charge);
   };
 
   const removeCharge = (cost: number) => {

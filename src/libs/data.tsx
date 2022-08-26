@@ -23,12 +23,12 @@ export const playerStatsData = {
       description: "A quick slashing move which does medium damage.",
     },
     {
-      name: "Slash",
-      cost: 70,
-      multiplier: 1.6,
+      name: "Slice",
+      cost: 15,
+      multiplier: 1.15,
       type: "attack",
       effect: "light attack",
-      description: "A quick slashing move which does medium damage.",
+      description: "",
     },
   ],
 };

@@ -75,10 +75,12 @@ html {
   color: rgb(180, 58, 58);
   animation: fadeIn ease 500ms both;
   opacity: 0;
+  font-style: italic;
 }
 
-.damage-display-fade:active {
-  opacity: 0;
+.enemy-damage-display {
+  animation: enemyDamageFadeIn ease 500ms both;
+  top: 0;
 }
 
 @keyframes fadeIn {
@@ -92,5 +94,44 @@ html {
   100% {
     opacity: 0;
     top: 90px;
+  }
+}
+
+@keyframes enemyDamageFadeIn {
+  0% {
+    opacity: 0;
+  }
+  90% {
+    opacity: 1;
+    top: 20px;
+  }
+  100% {
+    opacity: 0;
+    top: 20px;
+  }
+}
+
+.playerBasic {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  width: 165px;
+  height: 165px;
+  animation: slash ease 170ms 1;
+  opacity: 0.8;
+}
+
+@keyframes playerBasic {
+  0% {
+    background-image: url("Images/Attacks/Player-Basic/Frame1.png");
+  }
+  35% {
+    background-image: url("Images/Attacks/Player-Basic/Frame2.png");
+  }
+  70% {
+    background-image: url("Images/Attacks/Player-Basic/Frame3.png");
+  }
+  100% {
+    background-image: url("Images/Attacks/Player-Basic/Frame4.png");
   }
 }
