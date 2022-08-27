@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ColourOptions from "./ColourOptions";
 
 function GenerateCharacter() {
   const [usernameInput, setUsernameInput] = useState<string>("");
@@ -13,7 +14,6 @@ function GenerateCharacter() {
     gender: "",
     colour: "",
   });
-  const [coloursOptionsOpen, setColoursOptionsOpen] = useState(false);
 
   const updateCharName = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -104,32 +104,7 @@ function GenerateCharacter() {
           Neither
         </button>
       </div>
-      <button
-        className="colour-selection"
-        onClick={() => setColoursOptionsOpen(true)}
-      >
-        Colour
-      </button>
-
-      <div
-        className={
-          coloursOptionsOpen
-            ? "colours-selection-popup-dim popup-open"
-            : "colours-selection-popup-dim "
-        }
-        onClick={() => setColoursOptionsOpen(false)}
-      ></div>
-      <div
-        className={
-          coloursOptionsOpen
-            ? "colours-selection-popup  popup-open"
-            : "colours-selection-popup"
-        }
-      >
-        test
-      </div>
-
-      <br />
+      <ColourOptions />
       <button className="colour-selection">Generate</button>
     </div>
   );
