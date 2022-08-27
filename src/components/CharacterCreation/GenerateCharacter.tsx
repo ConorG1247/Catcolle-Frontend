@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ColourOptions from "./ColourOptions";
+import GenderSelection from "./GenderSelection";
 
 function GenerateCharacter() {
   const [usernameInput, setUsernameInput] = useState<string>("");
@@ -53,6 +54,10 @@ function GenerateCharacter() {
     setCharacterOptions({ ...characterOptions, gender: selection });
   };
 
+  const colourSelection = (selection: string) => {
+    setCharacterOptions({ ...characterOptions, colour: selection });
+  };
+
   return (
     <div>
       <input
@@ -68,43 +73,14 @@ function GenerateCharacter() {
       >
         {usernameInputConfirm}
       </div>
-      <div
-        style={{
-          display: "flex",
-        }}
-      >
-        <button
-          className={
-            characterOptions.gender === "male"
-              ? "gender-selection selected"
-              : "gender-selection"
-          }
-          onClick={() => genderSelection("male")}
-        >
-          Male
-        </button>
-        <button
-          className={
-            characterOptions.gender === "female"
-              ? "gender-selection selected"
-              : "gender-selection"
-          }
-          onClick={() => genderSelection("female")}
-        >
-          Female
-        </button>
-        <button
-          className={
-            characterOptions.gender === "neither"
-              ? "gender-selection selected"
-              : "gender-selection"
-          }
-          onClick={() => genderSelection("neither")}
-        >
-          Neither
-        </button>
-      </div>
-      <ColourOptions />
+      <GenderSelection
+        characterOptions={characterOptions.gender}
+        genderSelection={genderSelection}
+      />
+      <ColourOptions
+        characterOptions={characterOptions.colour}
+        colourSelection={colourSelection}
+      />
       <button className="colour-selection">Generate</button>
     </div>
   );

@@ -1,24 +1,31 @@
 import { useState } from "react";
 
-function ColourOptions() {
+type props = {
+  characterOptions: string;
+  colourSelection: (selection: string) => void;
+};
+
+function ColourOptions({ characterOptions, colourSelection }: props) {
   const [coloursOptionsOpen, setColoursOptionsOpen] = useState(false);
-  const [colourSelectionIndex, setColourSelectionIndex] = useState<
-    number | undefined
-  >();
+  const [colourSelectionIndex, setColourSelectionIndex] = useState<number>(99);
   let colourChoices = ["tan", "blue", "green", "tan", "blue", "green"];
 
   const confirmColourSelection = () => {
-    setColoursOptionsOpen(false);
+    if (colourChoices[colourSelectionIndex] !== undefined) {
+      colourSelection(colourChoices[colourSelectionIndex]);
+      setColoursOptionsOpen(false);
+    }
   };
 
   const cancelColourSelection = () => {
     setColoursOptionsOpen(false);
+    setColourSelectionIndex(99);
   };
 
   return (
     <div>
       <button
-        className="colour-selection"
+        className={`colour-selection ${"colour-" + characterOptions}`}
         onClick={() => setColoursOptionsOpen(true)}
       >
         Colour
@@ -29,8 +36,11 @@ function ColourOptions() {
             ? "colours-selection-popup-dim popup-open"
             : "colours-selection-popup-dim "
         }
-        onClick={() => setColoursOptionsOpen(false)}
-      ></div>
+        onClick={() => {
+          setColoursOptionsOpen(false);
+          setColourSelectionIndex(99);
+        }}
+      />
       <div
         className={
           coloursOptionsOpen
@@ -45,10 +55,14 @@ function ColourOptions() {
                 <div
                   className={
                     colourSelectionIndex === index
-                      ? "colour-selection-choice colour-selection-choice-selected"
+                      ? `colour-selection-choice ${
+                          "colour-" + colour
+                        } colour-selection-choice-selected`
                       : `colour-selection-choice ${"colour-" + colour}`
                   }
-                  onClick={() => setColourSelectionIndex(index)}
+                  onClick={() => {
+                    setColourSelectionIndex(index);
+                  }}
                 >
                   {colour[0].toLocaleUpperCase() + colour.slice(1)}
                 </div>
@@ -58,7 +72,11 @@ function ColourOptions() {
         </div>
         <div className="colour-selection-button-container">
           <div
-            className="colour-selection-button"
+            className={
+              colourChoices[colourSelectionIndex] === undefined
+                ? "colour-selection-disabled"
+                : "colour-selection-button"
+            }
             onClick={confirmColourSelection}
           >
             Confirm

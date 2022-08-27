@@ -164,26 +164,52 @@ html {
   cursor: pointer;
   border: none;
   margin: 10px 10px 10px 5px;
-  padding: 7px;
+  width: 100px;
+  padding: 8px;
   border-radius: 3px;
-  background-color: rgb(175, 54, 54);
+  color: rgb(219, 251, 255);
+  border: 2px solid rgb(255, 255, 255, 0);
   transition: 200ms;
 }
 
-.gender-selection:hover {
-  background-color: rgb(210, 69, 69);
+.gender-male {
+  background-color: #4ab3e2;
+}
+
+.gender-male:hover {
+  background-color: rgb(49, 152, 159);
+}
+
+.gender-male:active {
+  background-color: #4ab3e2;
+}
+
+.gender-female {
+  background-color: rgb(186, 60, 152);
+}
+
+.gender-female:hover {
+  background-color: rgb(157, 48, 128);
+}
+
+.gender-female:active {
+  background-color: rgb(186, 60, 152);
+}
+
+.gender-neither {
+  background-color: rgb(123, 60, 186);
+}
+
+.gender-neither:hover {
+  background-color: rgb(106, 50, 162);
+}
+
+.gender-neither:active {
+  background-color: rgb(123, 60, 186);
 }
 
 .selected {
-  background-color: rgb(123, 40, 40);
-}
-
-.selected:hover {
-  background-color: rgb(148, 48, 48);
-}
-
-.selected:active {
-  background-color: rgb(108, 36, 36);
+  border: 2px solid rgb(255, 255, 255);
 }
 
 /* Colour selection popup and buttons */
@@ -192,18 +218,23 @@ html {
   cursor: pointer;
   border: none;
   margin: 10px 10px 10px 5px;
-  padding: 7px;
+  width: 100px;
+  padding: 8px;
   border-radius: 3px;
-  background-color: rgb(175, 54, 54);
+  color: rgb(61, 61, 61);
+  background-color: rgb(232, 246, 255);
+  border: 2px solid rgb(41, 41, 41, 0.5);
   transition: 200ms;
 }
 
 .colour-selection:hover {
-  background-color: rgb(210, 69, 69);
+  color: rgb(61, 61, 61);
+  background-color: rgb(234, 234, 234);
 }
 
 .colour-selection:active {
-  background-color: rgb(144, 42, 42);
+  color: rgb(61, 61, 61);
+  background-color: rgb(168, 168, 168);
 }
 
 .colours-selection-popup {
@@ -230,29 +261,6 @@ html {
   margin: 10px;
 }
 
-.colour-selection-button-container {
-  display: flex;
-  margin: 10px;
-}
-
-.colour-selection-button {
-  cursor: pointer;
-  border: none;
-  margin: 10px 10px 10px 5px;
-  padding: 7px;
-  border-radius: 3px;
-  background-color: rgb(45, 45, 45);
-  transition: 200ms;
-}
-
-.colour-selection-button:hover {
-  background-color: rgb(79, 79, 79);
-}
-
-.colour-selection-button:active {
-  background-color: rgb(37, 37, 37);
-}
-
 .colours-selection-popup-dim {
   position: fixed;
   cursor: pointer;
@@ -271,6 +279,48 @@ html {
   opacity: 1;
 }
 
+.colour-selection-button-container {
+  display: flex;
+  margin: 10px;
+}
+
+.colour-selection-button {
+  cursor: pointer;
+  text-align: center;
+  margin: 10px 10px 10px 5px;
+  width: 100px;
+  padding: 8px;
+  border-radius: 3px;
+  color: rgb(61, 61, 61);
+  background-color: rgb(232, 246, 255);
+  border: 2px solid rgb(41, 41, 41, 0.5);
+  transition: 200ms;
+}
+
+.colour-selection-button:hover {
+  color: rgb(61, 61, 61);
+  background-color: rgb(234, 234, 234);
+}
+
+.colour-selection-button:active {
+  color: rgb(61, 61, 61);
+  background-color: rgb(168, 168, 168);
+}
+
+.colour-selection-disabled {
+  cursor: not-allowed;
+  user-select: none;
+  text-align: center;
+  margin: 10px 10px 10px 5px;
+  width: 100px;
+  padding: 8px;
+  border-radius: 3px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  transition: 200ms;
+  color: white;
+  background-color: rgb(30, 30, 30);
+}
+
 .colour-selection-container {
   text-align: center;
   width: 120px;
@@ -283,7 +333,7 @@ html {
   border-radius: 5px;
   background-color: rgb(36, 36, 36);
   border: 2px solid rgb(47, 47, 47, 0.1);
-  color: rgba(30, 30, 30, 0.7);
+  color: rgba(30, 30, 30, 0.8);
   transition: 200ms;
 }
 
@@ -292,7 +342,7 @@ html {
 }
 
 .colour-tan {
-  background-color: #dab27e;
+  background-color: #c8a272;
   transition: 200ms;
 }
 
@@ -333,11 +383,5 @@ html {
 }
 
 .colour-selection-choice-selected {
-  color: rgb(27, 27, 27);
-  background-color: rgb(231, 231, 231);
-}
-
-.colour-selection-choice-selected:hover {
-  color: rgb(27, 27, 27);
-  background-color: rgb(202, 202, 202);
+  border: 2px solid rgb(255, 255, 255);
 }
