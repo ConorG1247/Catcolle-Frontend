@@ -8,8 +8,11 @@ function Stab(
   changeBattleCheck: () => void,
   changeDamageNumber: (changes: number) => void
 ) {
-  const damage =
-    enemyStats.level * 2 + enemyStats.stats.strength * attack.multiplier;
+  const damage = Math.floor(
+    enemyStats.level * 2 +
+      enemyStats.stats.strength * attack.multiplier -
+      playerStats.stats.defence * 0.2
+  );
 
   changeDamageNumber(damage);
 

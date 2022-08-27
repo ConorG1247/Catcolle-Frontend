@@ -17,10 +17,12 @@ function EnemyBasic(
         playerStats.stats.defence * 0.4)
   );
 
-  const critChance = enemyStats.stats.chance * 0.4;
+  const critChance = enemyStats.crit + enemyStats.stats.chance * 0.4;
 
   if (critChance >= Math.floor(Math.random() * 100)) {
-    attackDamage = attackDamage * 1.6 + enemyStats.stats.chance * 0.2;
+    attackDamage = Math.floor(
+      attackDamage * enemyStats.cdmg + enemyStats.stats.chance * 0.2
+    );
   }
 
   const maxAttack = attackDamage + attackDamage * 0.15;

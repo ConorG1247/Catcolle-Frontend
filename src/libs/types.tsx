@@ -26,6 +26,10 @@ export type playerStats = {
   level: number;
   health: health;
   stats: stats;
+  initialStats: stats;
+  crit: number;
+  cdmg: number;
+  dodge: number;
   attacks: attacks[];
 };
 
@@ -42,5 +46,9 @@ export type enemyStats = {
   level: number;
   health: health;
   stats: eStats;
+  initialStats: stats;
+  crit: number;
+  cdmg: number;
+  dodge: number;
   attacks: attacks[];
 };

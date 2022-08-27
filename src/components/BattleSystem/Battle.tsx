@@ -15,13 +15,36 @@ function Battle() {
     setBattleCheck(false);
   };
 
+  // allows player health to change and passed down through props to enemy component
+  // allows stats and health of player to change and effect damage
+  const playerHealthChangeGlobal = (changes: number) => {
+    setPlayerStats({
+      ...playerStats,
+      health: {
+        ...playerStats.health,
+        health: changes,
+      },
+    });
+  };
+
+  const playerStatsChangeGlobal = (changes: playerStats) => {
+    setPlayerStats({
+      ...playerStats,
+      stats: {
+        ...playerStats.stats,
+        ...changes.stats,
+      },
+    });
+  };
+
   const addCharge = () => {
-    const charge =
+    const charge = Math.floor(
       playerCharge +
-      playerStats.level * 0.2 +
-      playerStats.stats.intelligence * 0.3 +
-      7 +
-      Math.floor(Math.random() * 6);
+        playerStats.level * 0.2 +
+        playerStats.stats.intelligence * 0.3 +
+        7 +
+        Math.random() * 6
+    );
     if (charge >= playerStats.stats.intelligence * 1.5 + 100) {
       setPlayerCharge(playerStats.stats.intelligence * 1.5 + 100);
       return;
@@ -39,6 +62,8 @@ function Battle() {
     setPlayerCharge(0);
   };
 
+  console.log(playerStats.stats.dexterity);
+
   return (
     <div>
       <Player
@@ -48,6 +73,7 @@ function Battle() {
         changeBattleCheck={changeBattleCheck}
         battleCheck={battleCheck}
         playerCharge={playerCharge}
+        playerHealthChangeGlobal={playerHealthChangeGlobal}
       />
       <Enemy
         pStats={playerStats}
@@ -58,6 +84,7 @@ function Battle() {
         addCharge={addCharge}
         playerCharge={playerCharge}
         removeCharge={removeCharge}
+        playerStatsChangeGlobal={playerStatsChangeGlobal}
       />
       <button className="reset" onClick={() => setBattleCheck(!battleCheck)}>
         Start

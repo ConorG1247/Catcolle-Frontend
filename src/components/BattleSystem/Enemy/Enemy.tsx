@@ -4,6 +4,7 @@ import EnemyHealth from "./EnemyHealth";
 import PlayerBasic from "hooks/PlayerAttacks/PlayerBasic";
 import AttackType from "hooks/PlayerAttacks/AttackType";
 import ChargeAttacks from "./ChargeAttacks";
+import BuffType from "hooks/PlayerBuffs/BuffType";
 
 type props = {
   pStats: playerStats;
@@ -14,6 +15,7 @@ type props = {
   addCharge: () => void;
   playerCharge: number;
   removeCharge: (cost: number) => void;
+  playerStatsChangeGlobal: (changes: playerStats) => void;
 };
 
 function Enemy({
@@ -25,6 +27,7 @@ function Enemy({
   addCharge,
   playerCharge,
   removeCharge,
+  playerStatsChangeGlobal,
 }: props) {
   const [playerStats, setPlayerStats] = useState(pStats);
   const [enemyStats, setEnemyStats] = useState(eStats);
@@ -45,6 +48,21 @@ function Enemy({
     setDamageNumberDisplay([]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset]);
+
+  useEffect(() => {
+    setPlayerStats({
+      ...playerStats,
+      health: {
+        ...playerStats.health,
+        health: pStats.health.health,
+      },
+      stats: {
+        ...playerStats.stats,
+        ...pStats.stats,
+      },
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pStats]);
 
   const playerAttackDelay = () => {
     setAttackDelayCheck(true);
@@ -87,8 +105,12 @@ function Enemy({
           enemyStats,
           changeEnemyHealth,
           changeBattleCheck,
-          changeDamageNumber
+          changeDamageNumber,
+          playerStatsChangeGlobal
         );
+        break;
+      case "buff":
+        BuffType(playerStats, attack, playerStatsChangeGlobal);
         break;
       default:
         return;

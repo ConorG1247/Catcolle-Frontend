@@ -6,12 +6,33 @@ function Slash(
   enemyStats: enemyStats,
   changeEnemyHealth: (changes: enemyStats) => void,
   changeBattleCheck: () => void,
-  changeDamageNumber: (changes: number) => void
+  changeDamageNumber: (changes: number) => void,
+  playerStatsChangeGlobal: (changes: playerStats) => void
 ) {
-  const damage =
-    playerStats.level * 5 + playerStats.stats.strength * attack.multiplier;
+  const damage = Math.floor(
+    playerStats.level * 5 +
+      playerStats.stats.strength * 0.8 * attack.multiplier -
+      enemyStats.stats.defence * 0.2
+  );
 
   changeDamageNumber(damage);
+
+  setTimeout(() => {
+    playerStatsChangeGlobal({
+      ...playerStats,
+      stats: {
+        ...playerStats.stats,
+        strength: playerStats.initialStats.strength,
+      },
+    });
+  }, 5000);
+  playerStatsChangeGlobal({
+    ...playerStats,
+    stats: {
+      ...playerStats.stats,
+      strength: playerStats.stats.strength * 1.5,
+    },
+  });
 
   if (enemyStats.health.health - damage <= 0) {
     changeEnemyHealth({

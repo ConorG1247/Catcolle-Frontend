@@ -13,22 +13,41 @@ export const playerStatsData = {
     agility: 10,
     chance: 10,
   },
+  initialStats: {
+    strength: 10,
+    intelligence: 10,
+    defence: 10,
+    dexterity: 10,
+    agility: 10,
+    chance: 10,
+  },
+  crit: 1,
+  cdmg: 1.5,
+  dodge: 5,
   attacks: [
     {
       name: "Slash",
-      cost: 70,
+      cost: 65,
       multiplier: 1.6,
       type: "attack",
-      effect: "light attack",
-      description: "A quick slashing move which does medium damage.",
+      effect: "attack buff",
+      description: "A heavy strike which increases strength temporarily.",
     },
     {
       name: "Slice",
-      cost: 15,
+      cost: 16,
       multiplier: 1.15,
       type: "attack",
       effect: "light attack",
-      description: "",
+      description: "Fast yet precise slice which does small damage.",
+    },
+    {
+      name: "Dexterity Up",
+      cost: 50,
+      multiplier: 7000,
+      type: "buff",
+      effect: "self buff",
+      description: "Increses dexterity for a short amount of time",
     },
   ],
 };
@@ -48,6 +67,17 @@ export const enemyStatsData = {
     agility: 10,
     chance: 10,
   },
+  initialStats: {
+    strength: 10,
+    intelligence: 10,
+    defence: 10,
+    dexterity: 10,
+    agility: 10,
+    chance: 10,
+  },
+  crit: 1,
+  cdmg: 1.5,
+  dodge: 5,
   attacks: [
     {
       name: "Stab",
@@ -59,3 +89,65 @@ export const enemyStatsData = {
     },
   ],
 };
+
+/* Attacks 
+
+Player Attacks
+
+  Attack Buffs
+
+    {
+      name: "Slash",
+      cost: 65,
+      multiplier: 1.6,
+      type: "attack",
+      effect: "attack buff",
+      description: "A heavy strike which increases strength temporarily.",
+    },
+
+
+
+    Light Attacks
+
+    {
+      name: "Slice",
+      cost: 16,
+      multiplier: 1.15,
+      type: "attack",
+      effect: "light attack",
+      description: "Fast yet precise slice which does small damage.",
+    },
+
+
+
+   Buffs
+
+    {
+      name: "Dexterity Up",
+      cost: 50,
+      multiplier: 7000,
+      type: "buff",
+      effect: "self buff",
+      description: "Increses dexterity for a short amount of time",
+    },
+
+
+
+
+
+Enemy Attacks
+
+    Buff Attacks
+
+    Light Attacks
+
+    {
+      name: "Stab",
+      cost: 60,
+      multiplier: 1.2,
+      type: "attack",
+      effect: "light attack",
+      description: "A fast stab, effective but low damage.",
+    },
+
+    */

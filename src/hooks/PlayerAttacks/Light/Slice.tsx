@@ -1,20 +1,17 @@
-import { enemyStats, playerStats } from "libs/types";
+import { attacks, enemyStats, playerStats } from "libs/types";
 
-function PlayerBasic(
+function Slice(
   playerStats: playerStats,
+  attack: attacks,
   enemyStats: enemyStats,
-  addCharge: () => void,
   changeEnemyHealth: (changes: enemyStats) => void,
   changeBattleCheck: () => void,
   changeDamageNumber: (changes: number) => void
 ) {
   let attackDamage = Math.floor(
-    (playerStats.level * 4) / 2 +
-      ((playerStats.stats.strength * 0.4 * playerStats.stats.agility * 0.3 +
-        playerStats.stats.intelligence * 0.3 +
-        playerStats.stats.dexterity * 0.6) /
-        2 -
-        enemyStats.stats.defence * 0.4)
+    playerStats.level * 1 +
+      playerStats.stats.dexterity * 0.4 * attack.multiplier -
+      enemyStats.stats.defence * 0.2
   );
 
   const critChance = playerStats.crit + playerStats.stats.chance * 0.4;
@@ -25,17 +22,9 @@ function PlayerBasic(
     );
   }
 
-  const maxAttack = attackDamage + attackDamage * 0.15;
-  const minAttack = attackDamage - attackDamage * 0.15;
+  changeDamageNumber(attackDamage);
 
-  const damageVariance = Math.floor(
-    Math.random() * (maxAttack - minAttack + 1) + minAttack
-  );
-
-  changeDamageNumber(damageVariance);
-  addCharge();
-
-  if (enemyStats.health.health - damageVariance <= 0) {
+  if (enemyStats.health.health - attackDamage <= 0) {
     changeEnemyHealth({
       ...enemyStats,
       health: {
@@ -52,9 +41,9 @@ function PlayerBasic(
     ...enemyStats,
     health: {
       ...enemyStats.health,
-      health: enemyStats.health.health - damageVariance,
+      health: enemyStats.health.health - attackDamage,
       percentage:
-        ((enemyStats.health.health - damageVariance) /
+        ((enemyStats.health.health - attackDamage) /
           enemyStats.health.initial) *
         100,
     },
@@ -62,4 +51,4 @@ function PlayerBasic(
   return;
 }
 
-export default PlayerBasic;
+export default Slice;

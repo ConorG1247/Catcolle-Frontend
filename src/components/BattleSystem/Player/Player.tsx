@@ -11,6 +11,7 @@ type props = {
   changeBattleCheck: () => void;
   battleCheck: boolean;
   playerCharge: number;
+  playerHealthChangeGlobal: (changes: number) => void;
 };
 
 function Player({
@@ -20,6 +21,7 @@ function Player({
   changeBattleCheck,
   battleCheck,
   playerCharge,
+  playerHealthChangeGlobal,
 }: props) {
   const [playerStats, setPlayerStats] = useState(pStats);
   const [enemyStats, setEnemyStats] = useState(eStats);
@@ -56,7 +58,6 @@ function Player({
 
       if (dodgeChance >= Math.floor(Math.random() * 100)) {
         setDamageNumberDisplay([...damageNumberDisplay, "Miss"]);
-        setTimeout(basicAttack, 1000 - enemyStats.stats.dexterity * 3);
         return;
       }
 
@@ -78,8 +79,9 @@ function Player({
       }
     };
     setTimeout(basicAttack, 1000 - enemyStats.stats.dexterity * 3);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [battleCheck, playerStats]);
+  }, [battleCheck, damageNumberDisplay]);
 
   function enemyChargedAttack(attack: attacks) {
     EnemyAttackType(
@@ -94,6 +96,7 @@ function Player({
 
   function changePlayerHealth(changes: playerStats) {
     setPlayerStats(changes);
+    playerHealthChangeGlobal(changes.health.health);
   }
 
   function changeDamageNumber(changes: number) {
