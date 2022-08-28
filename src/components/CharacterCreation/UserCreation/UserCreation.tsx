@@ -5,6 +5,9 @@ import UsernameInput from "./UsernameInput";
 function UserCreation() {
   const [allUsers, setAllUsers] = useState<string[]>([]);
   const [containerClassname, setContainerClassname] = useState("usercreation");
+  const [selectedUsername, setSelectedUsername] = useState<
+    string | undefined
+  >();
 
   useEffect(() => {
     const getUsers = async () => {
