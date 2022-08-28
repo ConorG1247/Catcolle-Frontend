@@ -344,20 +344,6 @@ html {
   }
 }
 
-/* Username input */
-
-.username-input-error {
-  color: red;
-  opacity: 1;
-  transition: 200ms;
-}
-
-.username-input-confirm {
-  color: green;
-  opacity: 1;
-  transition: 200ms;
-}
-
 /* Gender selection button */
 
 .gender-selection {

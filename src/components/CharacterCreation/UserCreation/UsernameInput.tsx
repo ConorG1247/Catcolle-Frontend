@@ -1,18 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CheckIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 
 type props = {
   allUsers: string[];
+  confirmUsername: (username: string | undefined) => void;
+  usernameErrorMessage: string | undefined;
+  usernameError: (check: string | undefined) => void;
+  nextPage: () => void;
 };
 
-function UsernameInput({ allUsers }: props) {
+function UsernameInput({
+  allUsers,
+  confirmUsername,
+  usernameErrorMessage,
+  usernameError,
+  nextPage,
+}: props) {
   const [validationMessage, setValidationMessage] = useState<
     string | undefined
   >("test");
   const [validationClassChange, setValidationClassChange] = useState(0);
 
+  useEffect(() => {
+    if (usernameErrorMessage) {
+      setValidationClassChange(2);
+      setValidationMessage(usernameErrorMessage);
+      return;
+    }
+  }, [usernameErrorMessage]);
+
   const userInputValidation = (input: React.ChangeEvent<HTMLInputElement>) => {
     const userInput = input.target.value;
+    confirmUsername(undefined);
+    usernameError(undefined);
 
     if (allUsers.includes(userInput.toLocaleLowerCase())) {
       setValidationClassChange(2);
@@ -39,6 +59,7 @@ function UsernameInput({ allUsers }: props) {
 
     setValidationClassChange(1);
     setValidationMessage("Username available!");
+    confirmUsername(userInput);
   };
 
   return (
@@ -54,6 +75,7 @@ function UsernameInput({ allUsers }: props) {
             : "usercreation-input-input"
         }
         onChange={(input) => userInputValidation(input)}
+        onKeyDown={(e) => (e.key === "Enter" ? nextPage() : "")}
       />
       {validationClassChange === 1 && <CheckIcon className="checkIcon" />}
       {validationClassChange === 2 && <InfoOutlineIcon className="infoIcon" />}
