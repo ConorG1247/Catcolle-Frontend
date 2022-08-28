@@ -140,6 +140,142 @@ html {
 
 /* UPDATE */
 
+/* User Creation */
+
+.usercreation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-color: #444444;
+}
+
+.usercreation-container {
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  align-items: center;
+  top: 20%;
+  width: 35%;
+  padding-bottom: 30px;
+  border-radius: 3px;
+  color: #242424;
+  border: 2px solid #8a8a8a;
+  background-color: #d3d3d3;
+  transition: 200ms;
+}
+
+.usercreation-title-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 0px 30px 0px;
+  margin: 10px;
+  width: 85%;
+}
+
+.usercreation-title {
+  text-align: center;
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.usercreation-subtitle {
+  text-align: center;
+  font-size: 0.95em;
+  color: #818181;
+}
+
+.usercreation-input-contianer {
+  display: flex;
+  flex-direction: column;
+  width: 85%;
+  margin-bottom: 25px;
+}
+
+.usercreation-input {
+  margin-bottom: 3px;
+  font-size: 1.1em;
+  color: #484848;
+}
+
+.usercreation-input-input {
+  height: 30px;
+  width: 97%;
+  padding-left: 8px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  border-radius: 6px;
+  border: 2px solid rgb(164, 164, 164);
+  font-size: 1em;
+  color: #484848;
+  transition: 200ms;
+}
+
+.usercreation-input-input:focus {
+  border: 2px solid #4195fc;
+  box-shadow: 0 0 3px #4195fc;
+  -webkit-box-shadow: 0 0 3px #4195fc;
+  -moz-box-shadow: 0 0 3px #4195fc;
+  outline: none;
+}
+
+.usercreation-input-input::placeholder {
+  font-size: 0.8em;
+  color: #3a3a3a;
+  opacity: 0.5;
+}
+
+.usercreation-input-validation {
+  margin: 5px 0px 0px 0px;
+}
+
+.usercreation-continue-container {
+  display: flex;
+  flex-direction: row;
+  width: 87%;
+}
+
+.usercreation-continue {
+  cursor: pointer;
+  text-align: center;
+  margin: 0px 10px 10px 5px;
+  width: 100px;
+  padding: 5px;
+  border-radius: 3px;
+  color: white;
+  background-color: rgb(95, 174, 223);
+  border: 2px solid rgba(130, 130, 130, 0.5);
+  transition: 200ms;
+}
+
+.usercreation-continue:hover {
+  background-color: #4890e9;
+}
+
+.usercreation-continue:active {
+  background-color: rgb(95, 174, 223);
+}
+
+@media (max-width: 80rem) {
+  .usercreation-container {
+    width: 50%;
+  }
+}
+
+@media (max-width: 50rem) {
+  .usercreation-container {
+    width: 70%;
+  }
+}
+
+@media (max-width: 40rem) {
+  .usercreation-container {
+    width: 90%;
+  }
+}
+
 /* Username input */
 
 .username-input-error {
@@ -167,7 +303,7 @@ html {
   width: 100px;
   padding: 8px;
   border-radius: 3px;
-  color: rgb(219, 251, 255);
+  color: white;
   border: 2px solid rgb(255, 255, 255, 0);
   transition: 200ms;
 }
