@@ -218,16 +218,18 @@ html {
   border-radius: 3px;
   color: white;
   background-color: #4195fc;
-  border: 2px solid rgba(130, 130, 130, 0.5);
+  border: 1.5px solid rgb(255, 255, 255, 0);
+
   transition: 200ms;
 }
 
 .usercreation-continue:hover {
-  background-color: #3d7ac4;
+  border: 1.5px solid rgb(255, 255, 255);
 }
 
 .usercreation-continue:active {
-  background-color: #4195fc;
+  background-color: #3d7ac4;
+  border: 1.5px solid rgb(255, 255, 255);
 }
 
 /* User Avatar Selection */
@@ -244,9 +246,40 @@ html {
 .avatar-button-container {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   padding: 10px;
-  width: 60%;
-  background-color: #444444;
+  width: 50%;
+}
+
+.back-container {
+  width: 100%;
+}
+
+.avatar-button {
+  cursor: pointer;
+  text-align: center;
+  margin: 0px 10px 0px 5px;
+  width: 100px;
+  padding: 5px;
+  border-radius: 3px;
+  color: white;
+  background-color: #4195fc;
+  border: 1.5px solid rgba(255, 255, 255, 0);
+  transition: 200ms;
+}
+
+.avatar-button:hover {
+  border: 1.5px solid rgb(255, 255, 255);
+}
+
+.avatar-button:active {
+  background-color: #3d7ac4;
+  border: 1.5px solid rgb(255, 255, 255);
+}
+
+.avatar-back-hidden {
+  display: none;
+  transition: 0ms;
 }
 
 .avatar-image-selection-container {
@@ -273,6 +306,7 @@ html {
 
 .avatar-image {
   width: 100px;
+  height: 100px;
   border-radius: 50%;
   margin: 10px;
   transition: 200ms;
@@ -307,6 +341,9 @@ html {
   .usercreation-container {
     width: 90%;
     top: 10%;
+  }
+  .avatar-button-container {
+    width: 80%;
   }
 }
 

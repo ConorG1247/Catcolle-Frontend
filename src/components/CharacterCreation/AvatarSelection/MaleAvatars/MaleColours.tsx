@@ -1,6 +1,10 @@
 import { maleAvatars, avatarColours } from "libs/avatarData";
 
-function MaleAvatars() {
+type props = {
+  avatarIndex: number;
+};
+
+function MaleColours({ avatarIndex }: props) {
   return (
     <div className="avatar-image-selection-container">
       {maleAvatars.map((path, index) => {
@@ -8,7 +12,9 @@ function MaleAvatars() {
           <div key={index} className="avatar-image-container ">
             <img
               className="avatar-image"
-              src={require(`../../../Avatars/${path + avatarColours[index]}`)}
+              src={require(`Avatars/${
+                maleAvatars[avatarIndex] + avatarColours[index]
+              }`)}
               alt="Guy"
             />
           </div>
@@ -18,4 +24,4 @@ function MaleAvatars() {
   );
 }
 
-export default MaleAvatars;
+export default MaleColours;
