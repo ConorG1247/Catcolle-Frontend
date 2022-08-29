@@ -16,6 +16,15 @@ function UserCreation() {
   const [selectedUsername, setSelectedUsername] = useState<
     string | undefined
   >();
+  const [avatarSelectCheck, setAvatarSelectCheck] = useState<
+    number | undefined
+  >();
+  const [selectedAvatarPath, setSelectedAvatarPath] = useState<
+    string | undefined
+  >();
+  const [avatarErrorMessage, setAvatarErrorMessage] = useState<
+    string | undefined
+  >();
 
   useEffect(() => {
     const getUsers = async () => {
@@ -31,36 +40,66 @@ function UserCreation() {
   };
 
   const nextPage = () => {
-    if (selectedUsername) {
+    if (selectedUsername && currentPage === 0) {
       setCurrentPage(currentPage + 1);
-      if (currentPage + 1 === 1) {
-        setSubTitleMessage("Select an avatar to be displayed on your profile.");
-      }
+      setSubTitleMessage(
+        "Select an avatar and preferred colour to be displayed on your profile."
+      );
+      return;
+    } else if (!selectedUsername) {
+      usernameError("Please enter a valid username.");
       return;
     }
 
-    usernameError("Please enter a valid username.");
+    if (selectedAvatarPath && currentPage === 1) {
+      setCurrentPage(currentPage + 1);
+      setSubTitleMessage("Select a border for your avatar picture.");
+    } else if (selectedAvatarPath === undefined) {
+      setAvatarErrorMessage("Please select an avatar and colour to continue.");
+      return;
+    }
   };
 
   const prevPage = () => {
     if (currentPage - 1 === 1) {
-      setSubTitleMessage("Select an avatar to be displayed on your profile.");
+      setSubTitleMessage(
+        "Select an avatar and preferred colour to be displayed on your profile."
+      );
+      setSelectedAvatarPath(undefined);
+      setAvatarSelectCheck(undefined);
+      setAvatarErrorMessage(undefined);
+      console.log("avatar");
     } else if (currentPage - 1 === 0) {
+      console.log("username");
       setSubTitleMessage(
         " Your main character creation, this can be customized and changed later."
       );
+      setUsernameErrorMessage(undefined);
+      setSelectedUsername(undefined);
     }
     setCurrentPage(currentPage - 1);
-    setUsernameErrorMessage(undefined);
-    setSelectedUsername(undefined);
   };
 
-  const usernameError = (check: string | undefined) => {
-    if (check) {
-      setUsernameErrorMessage(check);
+  const usernameError = (errorMessageCheck: string | undefined) => {
+    if (errorMessageCheck) {
+      setUsernameErrorMessage(errorMessageCheck);
       return;
     }
     setUsernameErrorMessage(undefined);
+  };
+
+  const changeSelectedAvatar = (
+    index: number | undefined,
+    avatarPath: string | undefined
+  ) => {
+    if (index === undefined) {
+      setAvatarSelectCheck(index);
+      setSelectedAvatarPath(undefined);
+      setAvatarErrorMessage(undefined);
+      return;
+    }
+    setAvatarSelectCheck(index);
+    setSelectedAvatarPath(avatarPath);
   };
 
   return (
@@ -79,7 +118,13 @@ function UserCreation() {
             nextPage={nextPage}
           />
         )}
-        {currentPage === 1 && <AvatarSelection />}
+        {currentPage === 1 && (
+          <AvatarSelection
+            avatarSelectCheck={avatarSelectCheck}
+            changeSelectedAvatar={changeSelectedAvatar}
+            avatarErrorMessage={avatarErrorMessage}
+          />
+        )}
         <CreationButtons
           nextPage={nextPage}
           prevPage={prevPage}

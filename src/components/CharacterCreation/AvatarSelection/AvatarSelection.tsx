@@ -6,11 +6,20 @@ import FemaleColours from "./FemaleAvatars/FemaleColours";
 import MaleAvatars from "./MaleAvatars/MaleAvatars";
 import MaleColours from "./MaleAvatars/MaleColours";
 
-function AvatarSelection() {
-  const [avatarSelectCheck, setAvatarSelectCheck] = useState<
-    number | undefined
-  >();
-  const [selectedAvatarPath, setSelectedAvatarPath] = useState();
+type props = {
+  avatarSelectCheck: number | undefined;
+  changeSelectedAvatar: (
+    index: number | undefined,
+    avatarPath: string | undefined
+  ) => void;
+  avatarErrorMessage: string | undefined;
+};
+
+function AvatarSelection({
+  avatarSelectCheck,
+  changeSelectedAvatar,
+  avatarErrorMessage,
+}: props) {
   const [avatarOptions, setAvatarOptions] = useState<number>(0);
   const [avatarIndex, setAvatarIndex] = useState<number>(99);
 
@@ -21,10 +30,20 @@ function AvatarSelection() {
   const genderSelection = (selection: number) => {
     setAvatarOptions(selection);
     setAvatarIndex(99);
+    changeSelectedAvatar(undefined, undefined);
   };
 
   return (
     <div className="avatar-container">
+      <div
+        className={
+          avatarErrorMessage
+            ? "avatar-error-message visible"
+            : "avatar-error-message avatar-error-hidden"
+        }
+      >
+        {avatarErrorMessage}
+      </div>
       <div className="avatar-button-container">
         <FontAwesomeIcon
           className={
@@ -33,6 +52,7 @@ function AvatarSelection() {
               : "avatar-button"
           }
           icon={faArrowLeftLong}
+          style={{ height: 20 }}
           onClick={() => genderSelection(avatarOptions)}
         />
         <button
@@ -63,10 +83,18 @@ function AvatarSelection() {
         <FemaleAvatars changeAvatarIndex={changeAvatarIndex} />
       )}
       {avatarIndex !== 99 && avatarOptions === 1 && (
-        <FemaleColours avatarIndex={avatarIndex} />
+        <FemaleColours
+          avatarIndex={avatarIndex}
+          changeSelectedAvatar={changeSelectedAvatar}
+          avatarSelectCheck={avatarSelectCheck}
+        />
       )}
       {avatarIndex !== 99 && avatarOptions === 0 && (
-        <MaleColours avatarIndex={avatarIndex} />
+        <MaleColours
+          avatarIndex={avatarIndex}
+          changeSelectedAvatar={changeSelectedAvatar}
+          avatarSelectCheck={avatarSelectCheck}
+        />
       )}
     </div>
   );

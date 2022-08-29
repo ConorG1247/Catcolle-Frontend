@@ -240,7 +240,7 @@ html {
   align-items: center;
   width: 90%;
   max-height: 400px;
-  padding: 20px 0px 50px 0px;
+  padding-bottom: 20px;
 }
 
 .avatar-button-container {
@@ -249,10 +249,6 @@ html {
   align-items: center;
   padding: 10px;
   width: 50%;
-}
-
-.back-container {
-  width: 100%;
 }
 
 .avatar-button {
@@ -311,6 +307,7 @@ html {
   margin: 10px;
   transition: 200ms;
   border: 5px solid rgb(255, 255, 255);
+  background-color: white;
 }
 
 .avatar-image:hover {
@@ -321,6 +318,40 @@ html {
 
 .avatar-image-selected {
   border: 5px solid rgb(0, 204, 255);
+}
+
+.avatar-error-message {
+  display: flex;
+  margin-bottom: 5px;
+  width: 92%;
+  border-radius: 5px;
+  padding: 10px;
+  color: white;
+  background-color: var(--error-colour);
+  transition: 200ms;
+}
+
+.avatar-error-hidden {
+  opacity: 0;
+  height: 0px;
+}
+
+/* GLOBAL STYLES */
+
+.disabled-button {
+  cursor: not-allowed;
+  background-color: #3c3c3c;
+  color: white;
+  border: 1.5px solid rgb(24, 24, 24);
+}
+
+.disabled-button:hover {
+  border: 1.5px solid rgb(79, 79, 79);
+}
+
+.disabled-button:active {
+  border: 1.5px solid rgb(79, 79, 79);
+  background-color: #3c3c3c;
 }
 
 /* MEDIA QUERIES */
