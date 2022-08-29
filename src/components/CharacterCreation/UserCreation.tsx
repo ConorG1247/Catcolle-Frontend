@@ -68,9 +68,7 @@ function UserCreation() {
       setSelectedAvatarPath(undefined);
       setAvatarSelectCheck(undefined);
       setAvatarErrorMessage(undefined);
-      console.log("avatar");
     } else if (currentPage - 1 === 0) {
-      console.log("username");
       setSubTitleMessage(
         " Your main character creation, this can be customized and changed later."
       );

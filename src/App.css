@@ -185,18 +185,6 @@ html {
   transition: 200ms;
 }
 
-.hidden {
-  height: 0px;
-  opacity: 0;
-  transition: 200ms;
-}
-
-.visible {
-  height: 30px;
-  opacity: 1;
-  transition: 200ms;
-}
-
 .subtitle-hidden {
   display: none;
 }
@@ -302,7 +290,7 @@ html {
 
 .avatar-image {
   width: 100px;
-  height: 100px;
+  min-height: 100px;
   border-radius: 50%;
   margin: 10px;
   transition: 200ms;
@@ -312,8 +300,6 @@ html {
 
 .avatar-image:hover {
   width: 110px;
-  border-radius: 50%;
-  margin: 10px;
 }
 
 .avatar-image-selected {
@@ -334,6 +320,18 @@ html {
 .avatar-error-hidden {
   opacity: 0;
   height: 0px;
+}
+
+.hidden {
+  height: 0px;
+  opacity: 0;
+  transition: 200ms;
+}
+
+.visible {
+  height: 30px;
+  opacity: 1;
+  transition: 200ms;
 }
 
 /* GLOBAL STYLES */
@@ -375,6 +373,9 @@ html {
   }
   .avatar-button-container {
     width: 80%;
+  }
+  .visible {
+    height: 55px;
   }
 }
 
