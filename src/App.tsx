@@ -1,6 +1,5 @@
 import Battle from "components/BattleSystem/Battle";
-import GenerateCharacter from "components/CharacterCreation/GenerateCharacter";
-import UserCreation from "components/CharacterCreation/UserCreation/UserCreation";
+import UserCreation from "components/CharacterCreation/UserCreation";
 
 import "./App.css";
 

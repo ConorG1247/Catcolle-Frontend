@@ -63,7 +63,7 @@ function UsernameInput({
   };
 
   return (
-    <div className="usercreation-input-contianer">
+    <div className="usercreation-input-container">
       <div className="usercreation-input">Username</div>
       <input
         placeholder="Between 2 and 16 characters"

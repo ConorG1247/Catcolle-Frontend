@@ -3,142 +3,40 @@ html {
   color: white;
 }
 
-/* UPDATE */
-
-.healthbar {
-  width: 200px;
-  height: 30px;
-  border: 3px solid rgb(255, 255, 255);
+.avatar-image-selection-container::-webkit-scrollbar {
+  width: 0.7em;
 }
 
-.inner {
-  width: 100px;
-  height: 30px;
+.avatar-image-selection-container::-webkit-scrollbar-track {
+  background-color: #54adc8;
+  border-radius: 10px;
+  margin-block: 0.2em;
+}
+
+.avatar-image-selection-container::-webkit-scrollbar-thumb {
+  background-color: #205a6b;
+  border: 2px solid #54adc8;
+  border-radius: 10px;
   transition: 200ms;
 }
 
-.charge {
-  width: 150px;
-  height: 15px;
-  border: 3px solid white;
-}
-
-.inner-charge {
-  height: 15px;
-  background-color: aqua;
+.avatar-image-selection-container::-webkit-scrollbar-thumb:hover {
+  background-color: #174756;
+  border: 2px solid #54adc8;
+  border-radius: 10px;
   transition: 200ms;
 }
 
-.reset {
-  cursor: pointer;
-  width: 100px;
-  height: 50px;
-  border-radius: 6px;
-  margin-left: 5px;
-  transition: 200ms;
-}
-
-.reset:hover {
-  color: white;
-  background-color: rgb(149, 149, 149);
-}
-
-.attack {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 10px;
-  margin: 10px 0px 10px 5px;
-  cursor: pointer;
-  user-select: none;
-  width: 100px;
-  height: 50px;
-  border: 0px;
-  border-radius: 6px;
-  background-color: aqua;
-  color: rgb(45, 45, 45);
-  transition: 100ms;
-}
-
-.attack:hover {
-  background-color: aquamarine;
-}
-
-.attack:disabled {
-  color: white;
-  background-color: rgb(209, 209, 209, 0.5);
-}
-
-.damage-display-fade {
-  position: absolute;
-  top: 110px;
-  left: 210px;
-  color: rgb(180, 58, 58);
-  animation: fadeIn ease 500ms both;
-  opacity: 0;
-  font-style: italic;
-}
-
-.enemy-damage-display {
-  animation: enemyDamageFadeIn ease 500ms both;
-  top: 0;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  90% {
-    opacity: 1;
-    top: 90px;
-  }
-  100% {
-    opacity: 0;
-    top: 90px;
+@supports (scrollbar-color: #54adc8 #205a6b) {
+  * {
+    scrollbar-color: #54adc8 #205a6b;
   }
 }
 
-@keyframes enemyDamageFadeIn {
-  0% {
-    opacity: 0;
-  }
-  90% {
-    opacity: 1;
-    top: 20px;
-  }
-  100% {
-    opacity: 0;
-    top: 20px;
-  }
+:root {
+  --confirm-colour: #2f9264;
+  --error-colour: #d40a0a;
 }
-
-.playerBasic {
-  position: absolute;
-  top: 50%;
-  left: 40%;
-  width: 165px;
-  height: 165px;
-  animation: slash ease 170ms 1;
-  opacity: 0.8;
-}
-
-@keyframes playerBasic {
-  0% {
-    background-image: url("Images/Attacks/Player-Basic/Frame1.png");
-  }
-  35% {
-    background-image: url("Images/Attacks/Player-Basic/Frame2.png");
-  }
-  70% {
-    background-image: url("Images/Attacks/Player-Basic/Frame3.png");
-  }
-  100% {
-    background-image: url("Images/Attacks/Player-Basic/Frame4.png");
-  }
-}
-
-/* UPDATE */
 
 /* User Creation */
 
@@ -187,7 +85,7 @@ html {
   color: #818181;
 }
 
-.usercreation-input-contianer {
+.usercreation-input-container {
   display: flex;
   flex-direction: column;
   width: 85%;
@@ -229,7 +127,7 @@ html {
 
 .checkIcon {
   position: relative;
-  color: #2f9264;
+  color: var(--confirm-colour);
   width: 20px;
   top: -28px;
   left: 93%;
@@ -240,7 +138,7 @@ html {
 
 .infoIcon {
   position: relative;
-  color: #d40a0a;
+  color: var(--error-colour);
   width: 20px;
   top: -28px;
   left: 93%;
@@ -250,18 +148,18 @@ html {
 }
 
 .input-error:focus {
-  border: 2px solid #d40a0a;
-  box-shadow: 0 0 3px #d40a0a;
-  -webkit-box-shadow: 0 0 3px #d40a0a;
-  -moz-box-shadow: 0 0 3px #d40a0a;
+  border: 2px solid var(--error-colour);
+  box-shadow: 0 0 3px var(--error-colour);
+  -webkit-box-shadow: 0 0 3px var(--error-colour);
+  -moz-box-shadow: 0 0 3px var(--error-colour);
   outline: none;
 }
 
 .input-confirm:focus {
-  border: 2px solid #2f9264;
-  box-shadow: 0 0 3px #2f9264;
-  -webkit-box-shadow: 0 0 3px #2f9264;
-  -moz-box-shadow: 0 0 3px #2f9264;
+  border: 2px solid var(--confirm-colour);
+  box-shadow: 0 0 3px var(--confirm-colour);
+  -webkit-box-shadow: 0 0 3px var(--confirm-colour);
+  -moz-box-shadow: 0 0 3px var(--confirm-colour);
   outline: none;
 }
 
@@ -271,7 +169,7 @@ html {
   margin: 5px 0px -11px 0px;
   color: white;
   border-radius: 5px;
-  background-color: #d40a0a;
+  background-color: var(--error-colour);
   opacity: 0;
   transition: 200ms;
 }
@@ -282,7 +180,7 @@ html {
   margin: 5px 0px -11px 0px;
   color: white;
   border-radius: 5px;
-  background-color: #2f9264;
+  background-color: var(--confirm-colour);
   opacity: 0;
   transition: 200ms;
 }
@@ -299,6 +197,12 @@ html {
   transition: 200ms;
 }
 
+.subtitle-hidden {
+  display: none;
+}
+
+/* User Creation Buttons */
+
 .usercreation-continue-container {
   display: flex;
   flex-direction: row;
@@ -313,18 +217,79 @@ html {
   padding: 5px;
   border-radius: 3px;
   color: white;
-  background-color: rgb(95, 174, 223);
+  background-color: #4195fc;
   border: 2px solid rgba(130, 130, 130, 0.5);
   transition: 200ms;
 }
 
 .usercreation-continue:hover {
-  background-color: #4890e9;
+  background-color: #3d7ac4;
 }
 
 .usercreation-continue:active {
-  background-color: rgb(95, 174, 223);
+  background-color: #4195fc;
 }
+
+/* User Avatar Selection */
+
+.avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-height: 400px;
+  padding: 20px 0px 50px 0px;
+}
+
+.avatar-button-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  width: 60%;
+  background-color: #444444;
+}
+
+.avatar-image-selection-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  width: 95%;
+  border-radius: 5px;
+  padding: 10px 0px 10px 0px;
+  background-color: #3d7ac4;
+  border: 3px solid rgb(255, 255, 255);
+  overflow-y: scroll;
+}
+
+.avatar-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 120px;
+  height: 120px;
+}
+
+.avatar-image {
+  width: 100px;
+  border-radius: 50%;
+  margin: 10px;
+  transition: 200ms;
+  border: 5px solid rgb(255, 255, 255);
+}
+
+.avatar-image:hover {
+  width: 110px;
+  border-radius: 50%;
+  margin: 10px;
+}
+
+.avatar-image-selected {
+  border: 5px solid rgb(0, 204, 255);
+}
+
+/* MEDIA QUERIES */
 
 @media (max-width: 80rem) {
   .usercreation-container {
@@ -341,61 +306,8 @@ html {
 @media (max-width: 40rem) {
   .usercreation-container {
     width: 90%;
+    top: 10%;
   }
-}
-
-/* Gender selection button */
-
-.gender-selection {
-  cursor: pointer;
-  border: none;
-  margin: 10px 10px 10px 5px;
-  width: 100px;
-  padding: 8px;
-  border-radius: 3px;
-  color: white;
-  border: 2px solid rgb(255, 255, 255, 0);
-  transition: 200ms;
-}
-
-.gender-male {
-  background-color: #4ab3e2;
-}
-
-.gender-male:hover {
-  background-color: rgb(49, 152, 159);
-}
-
-.gender-male:active {
-  background-color: #4ab3e2;
-}
-
-.gender-female {
-  background-color: rgb(186, 60, 152);
-}
-
-.gender-female:hover {
-  background-color: rgb(157, 48, 128);
-}
-
-.gender-female:active {
-  background-color: rgb(186, 60, 152);
-}
-
-.gender-neither {
-  background-color: rgb(123, 60, 186);
-}
-
-.gender-neither:hover {
-  background-color: rgb(106, 50, 162);
-}
-
-.gender-neither:active {
-  background-color: rgb(123, 60, 186);
-}
-
-.selected {
-  border: 2px solid rgb(255, 255, 255);
 }
 
 /* Colour selection popup and buttons */
@@ -571,3 +483,140 @@ html {
 .colour-selection-choice-selected {
   border: 2px solid rgb(255, 255, 255);
 }
+
+/* UPDATE */
+
+.healthbar {
+  width: 200px;
+  height: 30px;
+  border: 3px solid rgb(255, 255, 255);
+}
+
+.inner {
+  width: 100px;
+  height: 30px;
+  transition: 200ms;
+}
+
+.charge {
+  width: 150px;
+  height: 15px;
+  border: 3px solid white;
+}
+
+.inner-charge {
+  height: 15px;
+  background-color: aqua;
+  transition: 200ms;
+}
+
+.reset {
+  cursor: pointer;
+  width: 100px;
+  height: 50px;
+  border-radius: 6px;
+  margin-left: 5px;
+  transition: 200ms;
+}
+
+.reset:hover {
+  color: white;
+  background-color: rgb(149, 149, 149);
+}
+
+.attack {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  margin: 10px 0px 10px 5px;
+  cursor: pointer;
+  user-select: none;
+  width: 100px;
+  height: 50px;
+  border: 0px;
+  border-radius: 6px;
+  background-color: aqua;
+  color: rgb(45, 45, 45);
+  transition: 100ms;
+}
+
+.attack:hover {
+  background-color: aquamarine;
+}
+
+.attack:disabled {
+  color: white;
+  background-color: rgb(209, 209, 209, 0.5);
+}
+
+.damage-display-fade {
+  position: absolute;
+  top: 110px;
+  left: 210px;
+  color: rgb(180, 58, 58);
+  animation: fadeIn ease 500ms both;
+  opacity: 0;
+  font-style: italic;
+}
+
+.enemy-damage-display {
+  animation: enemyDamageFadeIn ease 500ms both;
+  top: 0;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  90% {
+    opacity: 1;
+    top: 90px;
+  }
+  100% {
+    opacity: 0;
+    top: 90px;
+  }
+}
+
+@keyframes enemyDamageFadeIn {
+  0% {
+    opacity: 0;
+  }
+  90% {
+    opacity: 1;
+    top: 20px;
+  }
+  100% {
+    opacity: 0;
+    top: 20px;
+  }
+}
+
+.playerBasic {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  width: 165px;
+  height: 165px;
+  animation: slash ease 170ms 1;
+  opacity: 0.8;
+}
+
+@keyframes playerBasic {
+  0% {
+    background-image: url("Images/Attacks/Player-Basic/Frame1.png");
+  }
+  35% {
+    background-image: url("Images/Attacks/Player-Basic/Frame2.png");
+  }
+  70% {
+    background-image: url("Images/Attacks/Player-Basic/Frame3.png");
+  }
+  100% {
+    background-image: url("Images/Attacks/Player-Basic/Frame4.png");
+  }
+}
+
+/* UPDATE */

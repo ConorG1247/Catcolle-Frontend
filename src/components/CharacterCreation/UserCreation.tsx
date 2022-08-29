@@ -1,11 +1,15 @@
 import getAllUsernames from "api/getAllUsernames";
 import { useState, useEffect } from "react";
-import UsernameInput from "./UsernameInput";
+import AvatarSelection from "./AvatarSelection/AvatarSelection";
+import CreationButtons from "./CreationButtons";
+import UsernameInput from "./Username/UsernameInput";
 
 function UserCreation() {
   const [allUsers, setAllUsers] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [containerClassname, setContainerClassname] = useState("usercreation");
+  const [subTitleMessage, setSubTitleMessage] = useState(
+    "Your main character creation, this can be customized and changed later."
+  );
   const [usernameErrorMessage, setUsernameErrorMessage] = useState<
     string | undefined
   >();
@@ -29,12 +33,23 @@ function UserCreation() {
   const nextPage = () => {
     if (selectedUsername) {
       setCurrentPage(currentPage + 1);
+      if (currentPage + 1 === 1) {
+        setSubTitleMessage("Select an avatar to be displayed on your profile.");
+      }
       return;
     }
+
     usernameError("Please enter a valid username.");
   };
 
   const prevPage = () => {
+    if (currentPage - 1 === 1) {
+      setSubTitleMessage("Select an avatar to be displayed on your profile.");
+    } else if (currentPage - 1 === 0) {
+      setSubTitleMessage(
+        " Your main character creation, this can be customized and changed later."
+      );
+    }
     setCurrentPage(currentPage - 1);
     setUsernameErrorMessage(undefined);
     setSelectedUsername(undefined);
@@ -49,14 +64,11 @@ function UserCreation() {
   };
 
   return (
-    <div className={`${containerClassname}`}>
+    <div className="usercreation">
       <div className="usercreation-container">
         <div className="usercreation-title-container">
           <div className="usercreation-title">Character Creation</div>
-          <div className="usercreation-subtitle">
-            Your main character creation, this can be customized and changed
-            later.
-          </div>
+          <div className="usercreation-subtitle">{subTitleMessage}</div>
         </div>
         {currentPage === 0 && (
           <UsernameInput
@@ -67,16 +79,12 @@ function UserCreation() {
             nextPage={nextPage}
           />
         )}
-        <div className="usercreation-continue-container">
-          <div className="usercreation-continue" onClick={nextPage}>
-            Continue
-          </div>
-          {currentPage > 0 && (
-            <div className="usercreation-continue" onClick={prevPage}>
-              Back
-            </div>
-          )}
-        </div>
+        {currentPage === 1 && <AvatarSelection />}
+        <CreationButtons
+          nextPage={nextPage}
+          prevPage={prevPage}
+          currentPage={currentPage}
+        />
       </div>
     </div>
   );
