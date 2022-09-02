@@ -36,3 +36,16 @@ export const avatarColours = [
   "8.png",
   "9.png",
 ];
+
+export const borderColour = [
+  "avatar-border-red",
+  "avatar-border-blue",
+  "avatar-border-green",
+  "avatar-border-purple",
+  "avatar-border-pink",
+  "avatar-border-white",
+  "avatar-border-black",
+  "avatar-border-yellow",
+  "avatar-border-brown",
+  "avatar-border-grey",
+];

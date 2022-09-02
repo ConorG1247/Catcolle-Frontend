@@ -1,6 +1,8 @@
 import getAllUsernames from "api/getAllUsernames";
 import { useState, useEffect } from "react";
+import AvatarBorder from "./AvatarBorder/AvatarBorder";
 import AvatarSelection from "./AvatarSelection/AvatarSelection";
+import ConfirmSelection from "./ConfirmSelection/ConfirmSelection";
 import CreationButtons from "./CreationButtons";
 import UsernameInput from "./Username/UsernameInput";
 
@@ -25,6 +27,7 @@ function UserCreation() {
   const [avatarErrorMessage, setAvatarErrorMessage] = useState<
     string | undefined
   >();
+  const [selectedBorder, setSelectedBorder] = useState<string | undefined>();
 
   useEffect(() => {
     const getUsers = async () => {
@@ -53,28 +56,49 @@ function UserCreation() {
 
     if (selectedAvatarPath && currentPage === 1) {
       setCurrentPage(currentPage + 1);
-      setSubTitleMessage("Select a border for your avatar picture.");
+      setSubTitleMessage(
+        "Select a border for your avatar picture to finish customising your profile."
+      );
+      return;
     } else if (selectedAvatarPath === undefined) {
-      setAvatarErrorMessage("Please select an avatar and colour to continue.");
+      setAvatarErrorMessage("Please select an avatar to continue.");
+      return;
+    }
+
+    if (selectedBorder && currentPage === 2) {
+      setCurrentPage(currentPage + 1);
+      setSubTitleMessage("Confirm your choices.");
+      return;
+    } else if (selectedBorder === undefined) {
+      setAvatarErrorMessage("Please select a border to continue.");
       return;
     }
   };
 
   const prevPage = () => {
-    if (currentPage - 1 === 1) {
+    if (currentPage - 1 === 2) {
+      setSubTitleMessage(
+        "Select a border for your avatar picture to finish customising your profile."
+      );
+      setAvatarErrorMessage(undefined);
+      setSelectedBorder(undefined);
+    } else if (currentPage - 1 === 1) {
       setSubTitleMessage(
         "Select an avatar and preferred colour to be displayed on your profile."
       );
       setSelectedAvatarPath(undefined);
       setAvatarSelectCheck(undefined);
       setAvatarErrorMessage(undefined);
+      setSelectedBorder(undefined);
     } else if (currentPage - 1 === 0) {
       setSubTitleMessage(
-        " Your main character creation, this can be customized and changed later."
+        "Your main character creation, this can be customized and changed later."
       );
       setUsernameErrorMessage(undefined);
       setSelectedUsername(undefined);
+      setAvatarErrorMessage(undefined);
     }
+
     setCurrentPage(currentPage - 1);
   };
 
@@ -98,6 +122,11 @@ function UserCreation() {
     }
     setAvatarSelectCheck(index);
     setSelectedAvatarPath(avatarPath);
+    setAvatarErrorMessage(undefined);
+  };
+
+  const changeSelectedBorder = (selection: string) => {
+    setSelectedBorder(selection);
   };
 
   return (
@@ -121,6 +150,20 @@ function UserCreation() {
             avatarSelectCheck={avatarSelectCheck}
             changeSelectedAvatar={changeSelectedAvatar}
             avatarErrorMessage={avatarErrorMessage}
+          />
+        )}
+        {currentPage === 2 && (
+          <AvatarBorder
+            selectedAvatarPath={selectedAvatarPath}
+            avatarErrorMessage={avatarErrorMessage}
+            changeSelectedBorder={changeSelectedBorder}
+          />
+        )}
+        {currentPage === 3 && (
+          <ConfirmSelection
+            selectedUsername={selectedUsername}
+            selectedAvatarPath={selectedAvatarPath}
+            selectedBorder={selectedBorder}
           />
         )}
         <CreationButtons

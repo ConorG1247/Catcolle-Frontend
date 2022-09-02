@@ -306,6 +306,8 @@ html {
   border: 5px solid rgb(0, 204, 255);
 }
 
+/* Avatar Error messages */
+
 .avatar-error-message {
   display: flex;
   margin-bottom: 5px;
@@ -320,17 +322,77 @@ html {
 .avatar-error-hidden {
   opacity: 0;
   height: 0px;
+  margin-bottom: -50px;
 }
 
-.hidden {
-  height: 0px;
-  opacity: 0;
-  transition: 200ms;
+/* Avatar border choices */
+
+.avatar-border-red {
+  border: 5px solid rgb(208, 63, 63);
 }
 
-.visible {
-  height: 30px;
-  opacity: 1;
+.avatar-border-blue {
+  border: 5px solid rgb(61, 178, 228);
+}
+
+.avatar-border-green {
+  border: 5px solid rgb(70, 235, 83);
+}
+
+.avatar-border-purple {
+  border: 5px solid rgb(157, 68, 213);
+}
+
+.avatar-border-pink {
+  border: 5px solid rgb(219, 53, 180);
+}
+
+.avatar-border-white {
+  border: 5px solid rgb(255, 255, 255);
+}
+
+.avatar-border-black {
+  border: 5px solid rgb(37, 37, 37);
+}
+
+.avatar-border-yellow {
+  border: 5px solid rgb(228, 231, 60);
+}
+
+.avatar-border-brown {
+  border: 5px solid rgb(169, 84, 38);
+}
+
+.avatar-border-grey {
+  border: 5px solid rgb(143, 143, 143);
+}
+
+.avatar-border-selected {
+  outline: 5px solid rgb(255, 255, 255);
+}
+
+/* Final user creation selection display */
+
+.avatar-final-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  width: 35%;
+  border-radius: 5px;
+  padding: 10px 0px 10px 0px;
+  background-color: #3d7ac4;
+  color: white;
+  border: 3px solid rgb(255, 255, 255);
+}
+
+.avatar-image-final {
+  width: 100px;
+  min-height: 100px;
+  border-radius: 50%;
+  margin: 10px;
+  background-color: white;
   transition: 200ms;
 }
 
@@ -350,6 +412,18 @@ html {
 .disabled-button:active {
   border: 1.5px solid rgb(79, 79, 79);
   background-color: #3c3c3c;
+}
+
+.hidden {
+  height: 0px;
+  opacity: 0;
+  transition: 200ms;
+}
+
+.visible {
+  height: 30px;
+  opacity: 1;
+  transition: 200ms;
 }
 
 /* MEDIA QUERIES */
@@ -374,8 +448,8 @@ html {
   .avatar-button-container {
     width: 80%;
   }
-  .visible {
-    height: 55px;
+  .avatar-final-container {
+    width: 50%;
   }
 }
 
